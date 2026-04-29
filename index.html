@@ -1087,54 +1087,7 @@
         <h2 class="section-title">პრემიუმ <em>Slimming Belt</em> სერია</h2>
         <div class="divider" style="margin: 24px auto;"></div>
       </div>
-      <div class="products-grid">
-
-        <div class="product-card fade-in">
-          <div class="product-image-placeholder">
-            <span class="product-icon">🩱</span>
-          </div>
-          <div class="product-body">
-            <div class="product-category">წელის კორსეტი</div>
-            <div class="product-name">Classic Waist Belt</div>
-            <p class="product-desc">ყოველდღიური გამოყენებისთვის შექმნილი საბაზისო მოდელი. მაღალი კომპრესიის ტექნოლოგიით აყალიბებს წელის არეს.</p>
-            <div class="product-footer">
-              <div class="product-price">₾149 <span>GEL</span></div>
-              <a href="#" class="product-btn">დეტალები</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card featured fade-in">
-          <div class="product-image-placeholder" style="height:320px; background: linear-gradient(160deg, rgba(232,63,160,0.5) 0%, rgba(30,4,60,0.85) 55%, rgba(155,45,106,0.45) 100%);">
-            <span class="product-icon">✨</span>
-          </div>
-          <div class="product-body">
-            <div class="product-category">სრული სხეული</div>
-            <div class="product-name">CORSÉ Signature Body Shaper</div>
-            <p class="product-desc">ჩვენი სამფლაგმანო პროდუქტი. ერთდროულად აყალიბებს წელს, მუცელს და მენჯის არეს. კლინიკურად გამოცდილი.</p>
-            <div class="product-footer">
-              <div class="product-price">₾299 <span>GEL</span></div>
-              <a href="#" class="product-btn">დეტალები</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card fade-in">
-          <div class="product-image-placeholder">
-            <span class="product-icon">💎</span>
-          </div>
-          <div class="product-body">
-            <div class="product-category">სპორტული სერია</div>
-            <div class="product-name">Active Slim Belt</div>
-            <p class="product-desc">ვარჯიშის დროს მაქსიმალური მხარდაჭერა და ოფლის ეფექტი. სპორტისთვის მორგებული სტრუქტურით — მოძრაობას არ ზღუდავს.</p>
-            <div class="product-footer">
-              <div class="product-price">₾199 <span>GEL</span></div>
-              <a href="#" class="product-btn">დეტალები</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <div class="products-grid" id="products-grid"></div>
     </div>
   </section>
 
@@ -1377,6 +1330,40 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Render products from JSON
+    async function loadProducts() {
+      const grid = document.getElementById('products-grid');
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        const products = data.products || [];
+        grid.innerHTML = products.map(p => {
+          const imgHtml = p.image
+            ? `<img src="${p.image}" style="width:100%;height:${p.featured?'320':'280'}px;object-fit:cover;display:block;" alt="${p.name}">`
+            : `<div class="product-image-placeholder"${p.featured ? ' style="height:320px;background:linear-gradient(160deg,rgba(232,63,160,0.5) 0%,rgba(30,4,60,0.85) 55%,rgba(155,45,106,0.45) 100%);"' : ''}>
+                <span class="product-icon">${p.icon || '✨'}</span>
+               </div>`;
+          return `
+            <div class="product-card ${p.featured ? 'featured' : ''} fade-in">
+              ${imgHtml}
+              <div class="product-body">
+                <div class="product-category">${p.category}</div>
+                <div class="product-name">${p.name}</div>
+                <p class="product-desc">${p.description}</p>
+                <div class="product-footer">
+                  <div class="product-price">₾${p.price} <span>GEL</span></div>
+                  <a href="#" class="product-btn">დეტალები</a>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+        document.querySelectorAll('#products-grid .fade-in').forEach(el => observer.observe(el));
+      } catch (e) {
+        grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;">პროდუქტები ვერ ჩაიტვირთა.</p>';
+      }
+    }
+    loadProducts();
 
     // Nav scroll behavior
     const nav = document.querySelector('nav');

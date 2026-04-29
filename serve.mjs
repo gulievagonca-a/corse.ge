@@ -21,9 +21,89 @@ const mimeTypes = {
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf',
+  '.webp': 'image/webp',
 };
 
-const server = http.createServer((req, res) => {
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try { resolve(JSON.parse(body)); }
+      catch (e) { reject(e); }
+    });
+    req.on('error', reject);
+  });
+}
+
+function setCors(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+function json(res, status, data) {
+  res.writeHead(status, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(data));
+}
+
+const server = http.createServer(async (req, res) => {
+  setCors(res);
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  // GET /api/products
+  if (req.url === '/api/products' && req.method === 'GET') {
+    const filePath = path.join(__dirname, 'products.json');
+    fs.readFile(filePath, (err, data) => {
+      if (err) return json(res, 500, { error: 'Could not read products' });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(data);
+    });
+    return;
+  }
+
+  // POST /api/products — save entire products array
+  if (req.url === '/api/products' && req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      const filePath = path.join(__dirname, 'products.json');
+      fs.writeFile(filePath, JSON.stringify(body, null, 2), err => {
+        if (err) return json(res, 500, { error: 'Could not save products' });
+        json(res, 200, { ok: true });
+      });
+    } catch {
+      json(res, 400, { error: 'Invalid JSON' });
+    }
+    return;
+  }
+
+  // POST /api/upload — save base64-encoded image to /uploads/
+  if (req.url === '/api/upload' && req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      const { filename, data } = body;
+      const uploadsDir = path.join(__dirname, 'uploads');
+      if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
+
+      const base64 = data.replace(/^data:[^;]+;base64,/, '');
+      const safeFilename = path.basename(filename);
+      const filePath = path.join(uploadsDir, safeFilename);
+      fs.writeFile(filePath, base64, 'base64', err => {
+        if (err) return json(res, 500, { error: 'Could not save file' });
+        json(res, 200, { url: `/uploads/${safeFilename}` });
+      });
+    } catch {
+      json(res, 400, { error: 'Invalid upload request' });
+    }
+    return;
+  }
+
+  // Static file serving
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/index.html';
 
@@ -44,4 +124,5 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Admin panel: http://localhost:${PORT}/admin.html`);
 });

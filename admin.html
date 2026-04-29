@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORSÉ Admin — პროდუქტების მართვა</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep:    #0A0118;
+      --bg-dark:    #120228;
+      --bg-card:    rgba(30, 4, 60, 0.7);
+      --pink:       #E83FA0;
+      --pink-light: #F472C8;
+      --pink-glow:  rgba(232, 63, 160, 0.35);
+      --pink-dim:   rgba(232, 63, 160, 0.12);
+      --maroon:     #9B2D6A;
+      --text:       #F5EAF3;
+      --text-muted: rgba(245, 234, 243, 0.55);
+      --border:     rgba(232, 63, 160, 0.2);
+      --border-bright: rgba(232, 63, 160, 0.5);
+      --green:      #4ade80;
+      --red:        #f87171;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 10% 20%, rgba(232,63,160,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(155,45,106,0.1) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,1,24,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .header-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--pink-light);
+      text-shadow: 0 0 20px var(--pink-glow);
+    }
+    .header-subtitle {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-back {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-back:hover { color: var(--pink-light); border-color: var(--border-bright); }
+    .btn-add {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--pink);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: box-shadow 0.25s, transform 0.2s;
+      box-shadow: 0 0 20px var(--pink-glow);
+    }
+    .btn-add:hover {
+      box-shadow: 0 0 36px var(--pink-glow);
+      transform: translateY(-1px);
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 48px 80px;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      top: 90px;
+      right: 32px;
+      z-index: 9999;
+      background: var(--bg-card);
+      border: 1px solid var(--border-bright);
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { border-color: rgba(74,222,128,0.5); color: var(--green); }
+    .toast.error { border-color: rgba(248,113,113,0.5); color: var(--red); }
+
+    /* ===== SECTION TITLE ===== */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--pink-light); }
+    .product-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== PRODUCTS GRID ===== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .product-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-4px);
+    }
+    .product-card.featured { border-color: rgba(232,63,160,0.4); }
+
+    .featured-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--pink);
+      color: #fff;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+      z-index: 2;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .product-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(160deg, rgba(155,45,106,0.55) 0%, rgba(30,4,60,0.9) 55%, rgba(232,63,160,0.3) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+    }
+
+    .product-body {
+      padding: 24px;
+    }
+    .product-category {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .product-desc {
+      font-size: 12px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--pink-light);
+    }
+    .product-price span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+    }
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      color: var(--text-muted);
+    }
+    .btn-icon:hover { border-color: var(--border-bright); }
+    .btn-icon.edit:hover { color: var(--pink-light); }
+    .btn-icon.delete:hover { color: var(--red); border-color: rgba(248,113,113,0.5); }
+
+    /* empty state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 40px;
+      grid-column: 1 / -1;
+    }
+    .empty-state p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,1,24,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-bright);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(232,63,160,0.12);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      padding: 32px 36px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .modal-title em { font-style: italic; color: var(--pink-light); }
+    .btn-close {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+      line-height: 1;
+    }
+    .btn-close:hover { color: var(--pink-light); border-color: var(--border-bright); }
+
+    .modal-body { padding: 32px 36px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      background: rgba(10,1,24,0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 0 3px var(--pink-dim);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.7;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(245,234,243,0.25); }
+
+    /* Image upload zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag { border-color: var(--border-bright); background: var(--pink-dim); }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+    .upload-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .upload-text strong { color: var(--pink-light); }
+    .upload-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: none;
+      margin-top: 12px;
+    }
+    .upload-preview.show { display: block; }
+
+    .or-divider {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin: 12px 0;
+      position: relative;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--border);
+    }
+    .or-divider::before { left: 0; }
+    .or-divider::after { right: 0; }
+
+    /* Toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,1,24,0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+    .toggle-label {
+      font-size: 13px;
+      color: var(--text);
+    }
+    .toggle-label small { display: block; font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    .toggle {
+      position: relative;
+      width: 48px; height: 26px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(232,63,160,0.15);
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 3px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      transition: transform 0.3s ease, background 0.3s;
+    }
+    .toggle input:checked + .toggle-slider {
+      background: var(--pink-dim);
+      border-color: var(--border-bright);
+    }
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(22px);
+      background: var(--pink);
+      box-shadow: 0 0 10px var(--pink-glow);
+    }
+
+    /* Modal footer */
+    .modal-footer {
+      padding: 24px 36px 32px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      border-top: 1px solid var(--border);
+    }
+    .btn-cancel {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 12px 28px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-cancel:hover { color: var(--pink-light); border-color: var(--border-bright); }
+    .btn-save {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--pink);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: box-shadow 0.25s, transform 0.2s;
+      box-shadow: 0 0 20px var(--pink-glow);
+    }
+    .btn-save:hover {
+      box-shadow: 0 0 36px var(--pink-glow);
+      transform: translateY(-1px);
+    }
+    .btn-save:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===== CONFIRM DIALOG ===== */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,1,24,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .confirm-overlay.open { opacity: 1; pointer-events: all; }
+    .confirm-box {
+      background: var(--bg-dark);
+      border: 1px solid rgba(248,113,113,0.4);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .confirm-icon { font-size: 48px; margin-bottom: 16px; }
+    .confirm-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .confirm-msg { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+    .confirm-actions { display: flex; gap: 12px; justify-content: center; }
+    .btn-confirm-cancel {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); border: 1px solid var(--border); background: transparent;
+      padding: 10px 24px; border-radius: 100px; cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-confirm-cancel:hover { color: var(--text); border-color: var(--text-muted); }
+    .btn-confirm-delete {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #fff; background: #c0392b; border: none;
+      padding: 10px 24px; border-radius: 100px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-confirm-delete:hover { background: var(--red); }
+
+    @media (max-width: 700px) {
+      header { padding: 0 20px; }
+      main { padding: 32px 20px 60px; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal-header, .modal-body, .modal-footer { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-brand">
+      <span class="header-logo">CORS&Eacute;</span>
+      <span class="header-subtitle">Admin პანელი</span>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="btn-back">← საიტზე დაბრუნება</a>
+      <button class="btn-add" onclick="openModal()">+ ახალი პროდუქტი</button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">მართვის პანელი</div>
+        <h1 class="section-title">ჩემი <em>პროდუქტები</em></h1>
+      </div>
+      <span class="product-count" id="product-count"></span>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </main>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">ახალი <em>პროდუქტი</em></h2>
+        <button class="btn-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="f-id" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>პროდუქტის სახელი *</label>
+            <input type="text" id="f-name" placeholder="Classic Waist Belt" />
+          </div>
+          <div class="form-group">
+            <label>კატეგორია *</label>
+            <input type="text" id="f-category" placeholder="წელის კორსეტი" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>აღწერა *</label>
+          <textarea id="f-description" placeholder="პროდუქტის დეტალური აღწერა..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>ფასი (₾) *</label>
+            <input type="number" id="f-price" placeholder="149" min="0" />
+          </div>
+          <div class="form-group">
+            <label>ემოჯი ხატულა</label>
+            <input type="text" id="f-icon" placeholder="🩱" maxlength="4" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>სურათი</label>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="f-image-file" accept="image/*" onchange="handleFileSelect(event)" />
+            <span class="upload-icon">📸</span>
+            <div class="upload-text">
+              <strong>დააჭირეთ ან გადაათრიეთ სურათი</strong><br>
+              PNG, JPG, WEBP — მაქს. 5MB
+            </div>
+          </div>
+          <img id="upload-preview" class="upload-preview" alt="preview" />
+          <div class="or-divider">ან</div>
+          <input type="text" id="f-image-url" placeholder="https://example.com/image.jpg (URL-ით)" oninput="handleUrlInput()" />
+        </div>
+
+        <div class="form-group">
+          <div class="toggle-row">
+            <div class="toggle-label">
+              ბესტსელერი
+              <small>პროდუქტს "ყველაზე პოპულარული" ბეჯი დაემატება</small>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="f-featured" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">გაუქმება</button>
+        <button class="btn-save" id="btn-save" onclick="saveProduct()">შენახვა</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">🗑️</div>
+      <h3 class="confirm-title">წაშლა?</h3>
+      <p class="confirm-msg">ეს პროდუქტი სამუდამოდ წაიშლება.<br>ეს მოქმედება შეუქცევადია.</p>
+      <div class="confirm-actions">
+        <button class="btn-confirm-cancel" onclick="closeConfirm()">გაუქმება</button>
+        <button class="btn-confirm-delete" id="btn-confirm-delete">წაშლა</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let products = [];
+    let pendingDeleteId = null;
+    let uploadedImageUrl = '';
+
+    // ===== LOAD =====
+    async function loadProducts() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        products = data.products || [];
+        renderGrid();
+      } catch {
+        showToast('პროდუქტები ვერ ჩაიტვირთა', 'error');
+      }
+    }
+
+    // ===== RENDER =====
+    function renderGrid() {
+      const grid = document.getElementById('products-grid');
+      const count = document.getElementById('product-count');
+      count.textContent = products.length + ' პროდუქტი';
+
+      if (!products.length) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p>ჯერ პროდუქტები არ გაქვთ</p>
+            <button class="btn-add" onclick="openModal()">+ პირველი პროდუქტის დამატება</button>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        const img = p.image
+          ? `<img class="product-img" src="${p.image}" alt="${p.name}">`
+          : `<div class="product-placeholder">${p.icon || '✨'}</div>`;
+        return `
+          <div class="product-card ${p.featured ? 'featured' : ''}">
+            ${p.featured ? '<span class="featured-badge">ყველაზე პოპულარული</span>' : ''}
+            ${img}
+            <div class="product-body">
+              <div class="product-category">${p.category}</div>
+              <div class="product-name">${p.name}</div>
+              <p class="product-desc">${p.description}</p>
+              <div class="product-footer">
+                <div class="product-price">₾${p.price} <span>GEL</span></div>
+                <div class="card-actions">
+                  <button class="btn-icon edit" onclick="editProduct('${p.id}')" title="რედაქტირება">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </button>
+                  <button class="btn-icon delete" onclick="confirmDelete('${p.id}')" title="წაშლა">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ===== MODAL =====
+    function openModal(product = null) {
+      const overlay = document.getElementById('modal-overlay');
+      const title = document.getElementById('modal-title');
+
+      clearForm();
+
+      if (product) {
+        title.innerHTML = 'პროდუქტის <em>რედაქტირება</em>';
+        document.getElementById('f-id').value = product.id;
+        document.getElementById('f-name').value = product.name;
+        document.getElementById('f-category').value = product.category;
+        document.getElementById('f-description').value = product.description;
+        document.getElementById('f-price').value = product.price;
+        document.getElementById('f-icon').value = product.icon || '';
+        document.getElementById('f-featured').checked = product.featured;
+        if (product.image) {
+          document.getElementById('f-image-url').value = product.image.startsWith('http') ? product.image : '';
+          uploadedImageUrl = product.image;
+          const preview = document.getElementById('upload-preview');
+          preview.src = product.image;
+          preview.classList.add('show');
+        }
+      } else {
+        title.innerHTML = 'ახალი <em>პროდუქტი</em>';
+      }
+
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+      clearForm();
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function clearForm() {
+      ['f-id','f-name','f-category','f-description','f-price','f-icon','f-image-url'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('f-featured').checked = false;
+      document.getElementById('f-image-file').value = '';
+      const preview = document.getElementById('upload-preview');
+      preview.src = '';
+      preview.classList.remove('show');
+      uploadedImageUrl = '';
+    }
+
+    function editProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (product) openModal(product);
+    }
+
+    // ===== SAVE =====
+    async function saveProduct() {
+      const btn = document.getElementById('btn-save');
+      const name = document.getElementById('f-name').value.trim();
+      const category = document.getElementById('f-category').value.trim();
+      const description = document.getElementById('f-description').value.trim();
+      const price = document.getElementById('f-price').value.trim();
+
+      if (!name || !category || !description || !price) {
+        showToast('გთხოვთ შეავსოთ ყველა სავალდებულო ველი (*)', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'შენახვა...';
+
+      const existingId = document.getElementById('f-id').value;
+      const urlInput = document.getElementById('f-image-url').value.trim();
+      const imageUrl = uploadedImageUrl || urlInput;
+
+      const product = {
+        id: existingId || 'prod_' + Date.now(),
+        name,
+        category,
+        description,
+        price,
+        icon: document.getElementById('f-icon').value.trim() || '✨',
+        featured: document.getElementById('f-featured').checked,
+        image: imageUrl,
+      };
+
+      if (existingId) {
+        const idx = products.findIndex(p => p.id === existingId);
+        if (idx !== -1) products[idx] = product;
+      } else {
+        products.push(product);
+      }
+
+      await saveToServer();
+      btn.disabled = false;
+      btn.textContent = 'შენახვა';
+      closeModal();
+    }
+
+    async function saveToServer() {
+      try {
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ products }),
+        });
+        if (!res.ok) throw new Error();
+        renderGrid();
+        showToast('✓ პროდუქტი წარმატებით შეინახა', 'success');
+      } catch {
+        showToast('შენახვა ვერ მოხერხდა — სერვერი გაშვებულია?', 'error');
+      }
+    }
+
+    // ===== DELETE =====
+    function confirmDelete(id) {
+      pendingDeleteId = id;
+      document.getElementById('confirm-overlay').classList.add('open');
+      document.getElementById('btn-confirm-delete').onclick = doDelete;
+    }
+
+    function closeConfirm() {
+      pendingDeleteId = null;
+      document.getElementById('confirm-overlay').classList.remove('open');
+    }
+
+    async function doDelete() {
+      products = products.filter(p => p.id !== pendingDeleteId);
+      closeConfirm();
+      await saveToServer();
+    }
+
+    // ===== IMAGE UPLOAD =====
+    async function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('სურათი ძალიან დიდია (მაქს. 5MB)', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const base64 = ev.target.result;
+        const preview = document.getElementById('upload-preview');
+        preview.src = base64;
+        preview.classList.add('show');
+
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: file.name, data: base64 }),
+          });
+          const data = await res.json();
+          uploadedImageUrl = data.url;
+          document.getElementById('f-image-url').value = '';
+          showToast('✓ სურათი ატვირთულია', 'success');
+        } catch {
+          uploadedImageUrl = base64;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleUrlInput() {
+      const url = document.getElementById('f-image-url').value.trim();
+      const preview = document.getElementById('upload-preview');
+      if (url) {
+        preview.src = url;
+        preview.classList.add('show');
+        uploadedImageUrl = '';
+      } else {
+        preview.src = '';
+        preview.classList.remove('show');
+      }
+    }
+
+    // Drag & drop
+    const zone = document.getElementById('upload-zone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const input = document.getElementById('f-image-file');
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        input.files = dt.files;
+        handleFileSelect({ target: input });
+      }
+    });
+
+    // ===== TOAST =====
+    let toastTimer;
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show ' + type;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { t.className = 'toast'; }, 3200);
+    }
+
+    // ===== KEYBOARD =====
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeConfirm();
+      }
+    });
+
+    loadProducts();
+  </script>
+</body>
+</html>
