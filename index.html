@@ -1400,10 +1400,11 @@
               }</div>` : '';
 
           const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
+          const defaultImgs = JSON.stringify(Array.isArray(p.images) ? p.images : []).replace(/'/g, '&#39;');
 
           return `
             <div class="product-card ${p.featured?'featured':''} fade-in"
-                 data-colors='${colorsStr}' data-icon="${icon}">
+                 data-colors='${colorsStr}' data-icon="${icon}" data-images='${defaultImgs}'>
               ${p.featured ? '<div class="featured-badge-el">ყველაზე პოპულარული</div>' : ''}
               <div class="product-gallery"></div>
               ${swatchesHtml}
@@ -1430,13 +1431,18 @@
     function initCards() {
       document.querySelectorAll('#products-grid .product-card[data-colors]').forEach(card => {
         const colors = JSON.parse(card.dataset.colors || '[]');
+        const defaultImages = JSON.parse(card.dataset.images || '[]');
         const icon = card.dataset.icon || '✨';
-        let activeColor = 0;
+        let activeColor = -1; // -1 = show default images
         let activeSlide = 0;
 
         function imgs() {
-          const c = colors[activeColor];
-          return (c && Array.isArray(c.images) && c.images.length) ? c.images : [];
+          if (activeColor >= 0) {
+            const c = colors[activeColor];
+            const ci = c && Array.isArray(c.images) && c.images.length ? c.images : [];
+            if (ci.length) return ci;
+          }
+          return defaultImages.length ? defaultImages : [];
         }
 
         function buildGallery() {
@@ -1501,6 +1507,9 @@
             buildGallery();
           });
         });
+
+        // Init with default images
+        activeColor = -1;
 
         buildGallery();
       });

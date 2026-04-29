@@ -402,7 +402,12 @@
       </div>
 
       <div class="form-group">
-        <label>ფერები და სურათები <span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0;">(ყოველ ფერს 1–4 სურათი)</span></label>
+        <label>📸 პროდუქტის სურათები <span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0;">— 1-დან 4-მდე სურათი</span></label>
+        <div id="general-slots"></div>
+      </div>
+
+      <div class="form-group">
+        <label>ფერების სურათები <span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0;">(სურვილისამებრ — ფერს ჩართეთ, შემდეგ ატვირთეთ)</span></label>
         <div class="color-manager" id="color-manager"></div>
       </div>
 
@@ -452,8 +457,10 @@
   /* ===== STATE ===== */
   let products = [];
   let pendingDeleteId = null;
-  // colorData: array parallel to COLORS_DEF with enabled + images[4]
+  let productImages = ['','','',''];
   let colorData = freshColorData();
+
+  function resetProductImages() { productImages = ['','','',''];}
 
   function freshColorData() {
     return COLORS_DEF.map(c => ({ ...c, enabled: false, images: ['','','',''] }));
@@ -499,9 +506,9 @@
 
     grid.innerHTML = products.map(p => {
       const colors = Array.isArray(p.colors) ? p.colors : [];
-      // First image from first color that has images
-      let firstImg = '';
-      for (const c of colors) { if (c.images && c.images.length) { firstImg = c.images[0]; break; } }
+      // First image: general images first, then per-color
+      let firstImg = (p.images && p.images.length) ? p.images[0] : '';
+      if (!firstImg) for (const c of colors) { if (c.images && c.images.length) { firstImg = c.images[0]; break; } }
       const imgHtml = firstImg
         ? `<img src="${firstImg}" alt="${p.name}">`
         : `<span class="card-icon">${p.icon||'✨'}</span>`;
@@ -537,6 +544,51 @@
         </div>`;
     }).join('');
   }
+
+  /* ===== GENERAL IMAGE SLOTS ===== */
+  function renderGeneralSlots() {
+    const container = document.getElementById('general-slots');
+    if (!container) return;
+    container.innerHTML = `<div class="color-slots" style="margin-top:0;">${
+      productImages.map((img, si) => `
+        <div class="img-slot ${img?'filled':''}" onclick="triggerGeneralSlot(${si})">
+          ${img ? `
+            <img src="${img}" alt="">
+            ${si===0?'<span class="slot-main">მთავარი</span>':''}
+            <button class="slot-remove" onclick="removeGeneralImg(event,${si})">×</button>
+          ` : `
+            <span class="slot-plus">+</span>
+            <span class="slot-lbl">${si===0?'მთავარი\nსურათი':'სურათი '+(si+1)}</span>
+          `}
+          <input type="file" accept="image/*" id="gfile-${si}" onchange="handleGeneralFile(event,${si})" style="display:none">
+        </div>
+      `).join('')
+    }</div>`;
+  }
+
+  function triggerGeneralSlot(si) { document.getElementById(`gfile-${si}`).click(); }
+
+  async function handleGeneralFile(e, si) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 8*1024*1024) { showToast('სურათი ძალიან დიდია (მაქს. 8MB)', 'error'); return; }
+    const reader = new FileReader();
+    reader.onload = async ev => {
+      productImages[si] = ev.target.result;
+      renderGeneralSlots();
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({filename:`${Date.now()}_${file.name}`, data: ev.target.result}),
+        });
+        const d = await res.json();
+        if (d.url) { productImages[si] = d.url; renderGeneralSlots(); showToast('✓ სურათი ატვირთულია','success'); }
+      } catch { showToast('ატვირთვა ვერ მოხერხდა','error'); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeGeneralImg(e, si) { e.stopPropagation(); productImages[si]=''; renderGeneralSlots(); }
 
   /* ===== COLOR MANAGER UI ===== */
   function renderColorManager() {
@@ -636,6 +688,11 @@
     }
 
     renderColorManager();
+    // Load general images
+    if (product && Array.isArray(product.images)) {
+      product.images.forEach((img, i) => { if (i < 4) productImages[i] = img; });
+    }
+    renderGeneralSlots();
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -658,6 +715,8 @@
     document.querySelectorAll('.size-pill input').forEach(el => el.checked = false);
     colorData = freshColorData();
     renderColorManager();
+    resetProductImages();
+    renderGeneralSlots();
   }
 
   function editProduct(id) {
@@ -683,6 +742,7 @@
     const existingId = document.getElementById('f-id').value;
     const sizes  = Array.from(document.querySelectorAll('.size-pill input:checked')).map(el => el.value);
     const colors = buildProductColors();
+    const images = productImages.filter(i => i.trim());
 
     const product = {
       id:          existingId || 'prod_' + Date.now(),
@@ -690,6 +750,7 @@
       icon:        document.getElementById('f-icon').value.trim() || '✨',
       featured:    document.getElementById('f-featured').checked,
       sizes,
+      images,
       colors,
     };
 
