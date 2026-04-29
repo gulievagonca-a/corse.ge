@@ -606,6 +606,65 @@
     }
     .btn-confirm-delete:hover { background: var(--red); }
 
+    /* ===== SIZE PILLS ===== */
+    .size-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .size-pill { position: relative; }
+    .size-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .size-pill label {
+      display: flex; align-items: center; justify-content: center;
+      width: 52px; height: 36px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--text-muted); cursor: pointer; margin: 0;
+      transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .size-pill label:hover { border-color: var(--border-bright); color: var(--text); }
+    .size-pill input:checked + label {
+      border-color: var(--pink); color: var(--pink-light);
+      background: var(--pink-dim);
+      box-shadow: 0 0 12px rgba(232,63,160,0.15);
+    }
+
+    /* ===== COLOR SWATCHES ===== */
+    .color-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .color-swatch { position: relative; }
+    .color-swatch input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .color-swatch label {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      cursor: pointer; margin: 0;
+      font-size: 10px; letter-spacing: 0.05em; text-transform: none;
+      color: var(--text-muted); transition: color 0.2s;
+    }
+    .color-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid transparent; outline: 2px solid transparent;
+      transition: outline-color 0.2s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: transparent;
+      transition: all 0.2s;
+    }
+    .color-swatch input:checked + label .color-dot {
+      outline-color: var(--pink-light);
+      box-shadow: 0 0 14px var(--pink-glow);
+      color: rgba(255,255,255,0.9);
+    }
+    .color-swatch input:checked + label { color: var(--text); }
+
+    /* ===== CARD SIZES & COLORS ===== */
+    .card-meta { margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .card-sizes { display: flex; flex-wrap: wrap; gap: 5px; }
+    .size-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--text-muted); border: 1px solid var(--border);
+      border-radius: 5px; padding: 3px 7px;
+    }
+    .card-colors { display: flex; gap: 6px; align-items: center; }
+    .color-pip {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 1px solid rgba(245,234,243,0.15);
+      display: inline-block;
+    }
+
     @media (max-width: 700px) {
       header { padding: 0 20px; }
       main { padding: 32px 20px 60px; }
@@ -696,6 +755,47 @@
         </div>
 
         <div class="form-group">
+          <label>ხელმისაწვდომი ზომები</label>
+          <div class="size-grid">
+            <div class="size-pill"><input type="checkbox" id="sz-xs" value="XS"><label for="sz-xs">XS</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-s"  value="S" ><label for="sz-s">S</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-m"  value="M" ><label for="sz-m">M</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-l"  value="L" ><label for="sz-l">L</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-xl" value="XL"><label for="sz-xl">XL</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-2xl" value="2XL"><label for="sz-2xl">2XL</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-3xl" value="3XL"><label for="sz-3xl">3XL</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-4xl" value="4XL"><label for="sz-4xl">4XL</label></div>
+            <div class="size-pill"><input type="checkbox" id="sz-5xl" value="5XL"><label for="sz-5xl">5XL</label></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ხელმისაწვდომი ფერები</label>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <input type="checkbox" id="col-black" value="შავი">
+              <label for="col-black"><span class="color-dot" style="background:#1C1C1C;">✓</span>შავი</label>
+            </div>
+            <div class="color-swatch">
+              <input type="checkbox" id="col-cream" value="კრემი">
+              <label for="col-cream"><span class="color-dot" style="background:#EDE0CC; border-color:rgba(245,234,243,0.2);">✓</span>კრემი</label>
+            </div>
+            <div class="color-swatch">
+              <input type="checkbox" id="col-white" value="თეთრი">
+              <label for="col-white"><span class="color-dot" style="background:#FFFFFF; border-color:rgba(245,234,243,0.3);">✓</span>თეთრი</label>
+            </div>
+            <div class="color-swatch">
+              <input type="checkbox" id="col-red" value="წითელი">
+              <label for="col-red"><span class="color-dot" style="background:#C0392B;">✓</span>წითელი</label>
+            </div>
+            <div class="color-swatch">
+              <input type="checkbox" id="col-brown" value="ყავისფერი">
+              <label for="col-brown"><span class="color-dot" style="background:#6B3A2A;">✓</span>ყავისფერი</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
           <div class="toggle-row">
             <div class="toggle-label">
               ბესტსელერი
@@ -760,10 +860,20 @@
         return;
       }
 
+      const colorMap = { 'შავი':'#1C1C1C','კრემი':'#EDE0CC','თეთრი':'#FFFFFF','წითელი':'#C0392B','ყავისფერი':'#6B3A2A' };
+
       grid.innerHTML = products.map(p => {
         const img = p.image
           ? `<img class="product-img" src="${p.image}" alt="${p.name}">`
           : `<div class="product-placeholder">${p.icon || '✨'}</div>`;
+
+        const sizesHtml = p.sizes && p.sizes.length
+          ? `<div class="card-sizes">${p.sizes.map(s => `<span class="size-tag">${s}</span>`).join('')}</div>` : '';
+        const colorsHtml = p.colors && p.colors.length
+          ? `<div class="card-colors">${p.colors.map(c => `<span class="color-pip" style="background:${colorMap[c]||'#888'};${c==='თეთრი'?'border-color:rgba(245,234,243,0.3);':''}" title="${c}"></span>`).join('')}</div>` : '';
+        const metaHtml = (sizesHtml || colorsHtml)
+          ? `<div class="card-meta">${sizesHtml}${colorsHtml}</div>` : '';
+
         return `
           <div class="product-card ${p.featured ? 'featured' : ''}">
             ${p.featured ? '<span class="featured-badge">ყველაზე პოპულარული</span>' : ''}
@@ -772,6 +882,7 @@
               <div class="product-category">${p.category}</div>
               <div class="product-name">${p.name}</div>
               <p class="product-desc">${p.description}</p>
+              ${metaHtml}
               <div class="product-footer">
                 <div class="product-price">₾${p.price} <span>GEL</span></div>
                 <div class="card-actions">
@@ -804,6 +915,12 @@
         document.getElementById('f-price').value = product.price;
         document.getElementById('f-icon').value = product.icon || '';
         document.getElementById('f-featured').checked = product.featured;
+        document.querySelectorAll('.size-pill input').forEach(el => {
+          el.checked = Array.isArray(product.sizes) && product.sizes.includes(el.value);
+        });
+        document.querySelectorAll('.color-swatch input').forEach(el => {
+          el.checked = Array.isArray(product.colors) && product.colors.includes(el.value);
+        });
         if (product.image) {
           document.getElementById('f-image-url').value = product.image.startsWith('http') ? product.image : '';
           uploadedImageUrl = product.image;
@@ -839,6 +956,7 @@
       preview.src = '';
       preview.classList.remove('show');
       uploadedImageUrl = '';
+      document.querySelectorAll('.size-pill input, .color-swatch input').forEach(el => el.checked = false);
     }
 
     function editProduct(id) {
@@ -866,6 +984,9 @@
       const urlInput = document.getElementById('f-image-url').value.trim();
       const imageUrl = uploadedImageUrl || urlInput;
 
+      const sizes = Array.from(document.querySelectorAll('.size-pill input:checked')).map(el => el.value);
+      const colors = Array.from(document.querySelectorAll('.color-swatch input:checked')).map(el => el.value);
+
       const product = {
         id: existingId || 'prod_' + Date.now(),
         name,
@@ -875,6 +996,8 @@
         icon: document.getElementById('f-icon').value.trim() || '✨',
         featured: document.getElementById('f-featured').checked,
         image: imageUrl,
+        sizes,
+        colors,
       };
 
       if (existingId) {

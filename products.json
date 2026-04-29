@@ -8,7 +8,9 @@
       "price": "149",
       "icon": "🩱",
       "featured": false,
-      "image": ""
+      "image": "",
+      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "colors": ["შავი", "კრემი", "თეთრი"]
     },
     {
       "id": "prod_2",
@@ -18,7 +20,9 @@
       "price": "299",
       "icon": "✨",
       "featured": true,
-      "image": ""
+      "image": "",
+      "sizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": ["შავი", "კრემი", "თეთრი", "წითელი", "ყავისფერი"]
     },
     {
       "id": "prod_3",
@@ -28,7 +32,9 @@
       "price": "199",
       "icon": "💎",
       "featured": false,
-      "image": ""
+      "image": "",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+      "colors": ["შავი", "წითელი"]
     }
   ]
 }

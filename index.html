@@ -1334,6 +1334,7 @@
     // Render products from JSON
     async function loadProducts() {
       const grid = document.getElementById('products-grid');
+      const colorMap = {'შავი':'#1C1C1C','კრემი':'#EDE0CC','თეთრი':'#FFFFFF','წითელი':'#C0392B','ყავისფერი':'#6B3A2A'};
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
@@ -1344,6 +1345,10 @@
             : `<div class="product-image-placeholder"${p.featured ? ' style="height:320px;background:linear-gradient(160deg,rgba(232,63,160,0.5) 0%,rgba(30,4,60,0.85) 55%,rgba(155,45,106,0.45) 100%);"' : ''}>
                 <span class="product-icon">${p.icon || '✨'}</span>
                </div>`;
+          const sizesHtml = p.sizes && p.sizes.length
+            ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${p.sizes.map(s=>`<span style="font-size:9px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);border:1px solid var(--border);border-radius:5px;padding:2px 7px;">${s}</span>`).join('')}</div>` : '';
+          const colorsHtml = p.colors && p.colors.length
+            ? `<div style="display:flex;gap:5px;align-items:center;margin-bottom:12px;">${p.colors.map(c=>`<span title="${c}" style="width:13px;height:13px;border-radius:50%;background:${colorMap[c]||'#888'};display:inline-block;border:1px solid rgba(245,234,243,0.2);"></span>`).join('')}</div>` : '';
           return `
             <div class="product-card ${p.featured ? 'featured' : ''} fade-in">
               ${imgHtml}
@@ -1351,6 +1356,7 @@
                 <div class="product-category">${p.category}</div>
                 <div class="product-name">${p.name}</div>
                 <p class="product-desc">${p.description}</p>
+                ${sizesHtml}${colorsHtml}
                 <div class="product-footer">
                   <div class="product-price">₾${p.price} <span>GEL</span></div>
                   <a href="#" class="product-btn">დეტალები</a>
