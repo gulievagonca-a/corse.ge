@@ -508,18 +508,13 @@
       border-color: rgba(232,63,160,0.4);
       grid-row: span 1;
     }
-    .product-card.featured::before {
-      content: 'ყველაზე პოპულარული';
-      position: absolute;
-      top: 16px; right: 16px;
-      background: var(--pink);
-      color: #fff;
-      font-size: 8px;
-      letter-spacing: 0.25em;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 100px;
-      z-index: 2;
+    .product-card.featured::before { display: none; }
+    .featured-badge-el {
+      position: absolute; top: 14px; right: 14px; z-index: 10;
+      background: var(--pink); color: #fff;
+      font-size: 8px; letter-spacing: 0.22em; font-weight: 700;
+      padding: 5px 12px; border-radius: 100px; text-transform: uppercase;
+      pointer-events: none;
     }
     .product-image {
       width: 100%;
@@ -961,6 +956,56 @@
       transform: translateY(0);
     }
 
+    /* ===== PRODUCT GALLERY ===== */
+    .product-gallery {
+      position: relative; width: 100%; aspect-ratio: 3/4;
+      background: #0d011e; overflow: hidden;
+    }
+    .gallery-slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.38s ease;
+    }
+    .gallery-slide.active { opacity: 1; }
+    .gallery-slide img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+    .gallery-slide .gal-icon { font-size: 80px; opacity: 0.65; filter: drop-shadow(0 0 24px rgba(232,63,160,0.55)); }
+    .gallery-dots {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 3;
+    }
+    .gallery-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(245,234,243,0.3); cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .gallery-dot.active { background: var(--pink-light); transform: scale(1.4); }
+    .gallery-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(10,1,24,0.65); backdrop-filter: blur(4px);
+      border: 1px solid rgba(232,63,160,0.25);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 3; color: var(--text);
+      font-size: 16px; line-height: 1; opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .product-card:hover .gallery-nav-btn { opacity: 1; }
+    .gallery-prev { left: 8px; }
+    .gallery-next { right: 8px; }
+    .gallery-nav-btn:hover { background: rgba(232,63,160,0.35); border-color: var(--border-bright); }
+
+    /* ===== CARD COLOR SWATCHES ===== */
+    .card-swatches { display: flex; align-items: center; gap: 7px; padding: 12px 24px 0; }
+    .card-swatch {
+      width: 17px; height: 17px; border-radius: 50%; cursor: pointer; flex-shrink: 0;
+      border: 1.5px solid rgba(245,234,243,0.1);
+      box-shadow: 0 0 0 0px var(--pink-light);
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
+    }
+    .card-swatch.active { box-shadow: 0 0 0 2.5px var(--pink-light); }
+    .card-swatch:hover { transform: scale(1.18); }
+    .card-swatch.swatch-white { border-color: rgba(245,234,243,0.35); }
+
     /* Mobile */
     @media (max-width: 900px) {
       nav { padding: 20px 24px; }
@@ -1334,29 +1379,39 @@
     // Render products from JSON
     async function loadProducts() {
       const grid = document.getElementById('products-grid');
-      const colorMap = {'შავი':'#1C1C1C','კრემი':'#EDE0CC','თეთრი':'#FFFFFF','წითელი':'#C0392B','ყავისფერი':'#6B3A2A'};
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
         const products = data.products || [];
+
         grid.innerHTML = products.map(p => {
-          const imgHtml = p.image
-            ? `<img src="${p.image}" style="width:100%;height:${p.featured?'320':'280'}px;object-fit:cover;display:block;" alt="${p.name}">`
-            : `<div class="product-image-placeholder"${p.featured ? ' style="height:320px;background:linear-gradient(160deg,rgba(232,63,160,0.5) 0%,rgba(30,4,60,0.85) 55%,rgba(155,45,106,0.45) 100%);"' : ''}>
-                <span class="product-icon">${p.icon || '✨'}</span>
-               </div>`;
+          const colors = Array.isArray(p.colors) ? p.colors : [];
+          const icon = p.icon || '✨';
+
+          const swatchesHtml = colors.length > 1
+            ? `<div class="card-swatches">${colors.map((c, i) =>
+                `<div class="card-swatch${i===0?' active':''}${c.hex==='#FFFFFF'?' swatch-white':''}"
+                      style="background:${c.hex}" data-ci="${i}" title="${c.name}"></div>`
+              ).join('')}</div>` : '';
+
           const sizesHtml = p.sizes && p.sizes.length
-            ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${p.sizes.map(s=>`<span style="font-size:9px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);border:1px solid var(--border);border-radius:5px;padding:2px 7px;">${s}</span>`).join('')}</div>` : '';
-          const colorsHtml = p.colors && p.colors.length
-            ? `<div style="display:flex;gap:5px;align-items:center;margin-bottom:12px;">${p.colors.map(c=>`<span title="${c}" style="width:13px;height:13px;border-radius:50%;background:${colorMap[c]||'#888'};display:inline-block;border:1px solid rgba(245,234,243,0.2);"></span>`).join('')}</div>` : '';
+            ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${
+                p.sizes.map(s=>`<span style="font-size:9px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);border:1px solid var(--border);border-radius:5px;padding:2px 7px;">${s}</span>`).join('')
+              }</div>` : '';
+
+          const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
+
           return `
-            <div class="product-card ${p.featured ? 'featured' : ''} fade-in">
-              ${imgHtml}
+            <div class="product-card ${p.featured?'featured':''} fade-in"
+                 data-colors='${colorsStr}' data-icon="${icon}">
+              ${p.featured ? '<div class="featured-badge-el">ყველაზე პოპულარული</div>' : ''}
+              <div class="product-gallery"></div>
+              ${swatchesHtml}
               <div class="product-body">
                 <div class="product-category">${p.category}</div>
                 <div class="product-name">${p.name}</div>
                 <p class="product-desc">${p.description}</p>
-                ${sizesHtml}${colorsHtml}
+                ${sizesHtml}
                 <div class="product-footer">
                   <div class="product-price">₾${p.price} <span>GEL</span></div>
                   <a href="#" class="product-btn">დეტალები</a>
@@ -1364,11 +1419,93 @@
               </div>
             </div>`;
         }).join('');
+
+        initCards();
         document.querySelectorAll('#products-grid .fade-in').forEach(el => observer.observe(el));
-      } catch (e) {
-        grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;">პროდუქტები ვერ ჩაიტვირთა.</p>';
+      } catch {
+        grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">პროდუქტები ვერ ჩაიტვირთა.</p>';
       }
     }
+
+    function initCards() {
+      document.querySelectorAll('#products-grid .product-card[data-colors]').forEach(card => {
+        const colors = JSON.parse(card.dataset.colors || '[]');
+        const icon = card.dataset.icon || '✨';
+        let activeColor = 0;
+        let activeSlide = 0;
+
+        function imgs() {
+          const c = colors[activeColor];
+          return (c && Array.isArray(c.images) && c.images.length) ? c.images : [];
+        }
+
+        function buildGallery() {
+          const gallery = card.querySelector('.product-gallery');
+          const images = imgs();
+          gallery.innerHTML = '';
+
+          if (images.length) {
+            images.forEach((src, i) => {
+              const slide = document.createElement('div');
+              slide.className = 'gallery-slide' + (i === activeSlide ? ' active' : '');
+              const img = document.createElement('img');
+              img.src = src; img.loading = 'lazy';
+              slide.appendChild(img);
+              gallery.appendChild(slide);
+            });
+
+            if (images.length > 1) {
+              const dotsDiv = document.createElement('div');
+              dotsDiv.className = 'gallery-dots';
+              images.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'gallery-dot' + (i === activeSlide ? ' active' : '');
+                dot.addEventListener('click', e => { e.stopPropagation(); activeSlide = i; buildGallery(); });
+                dotsDiv.appendChild(dot);
+              });
+              gallery.appendChild(dotsDiv);
+
+              const mkBtn = (cls, html) => {
+                const b = document.createElement('button');
+                b.className = 'gallery-nav-btn ' + cls;
+                b.innerHTML = html; b.type = 'button';
+                return b;
+              };
+              const prev = mkBtn('gallery-prev', '&#8249;');
+              const next = mkBtn('gallery-next', '&#8250;');
+              prev.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); activeSlide = (activeSlide - 1 + images.length) % images.length; buildGallery(); });
+              next.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); activeSlide = (activeSlide + 1) % images.length; buildGallery(); });
+              gallery.appendChild(prev);
+              gallery.appendChild(next);
+
+              let tx = 0;
+              gallery.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+              gallery.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - tx;
+                if (Math.abs(dx) > 40) { activeSlide = dx < 0 ? (activeSlide+1)%images.length : (activeSlide-1+images.length)%images.length; buildGallery(); }
+              }, { passive: true });
+            }
+          } else {
+            const slide = document.createElement('div');
+            slide.className = 'gallery-slide active';
+            slide.innerHTML = `<span class="gal-icon">${icon}</span>`;
+            gallery.appendChild(slide);
+          }
+        }
+
+        card.querySelectorAll('.card-swatch').forEach((sw, i) => {
+          sw.addEventListener('click', e => {
+            e.preventDefault();
+            activeColor = i; activeSlide = 0;
+            card.querySelectorAll('.card-swatch').forEach((s, j) => s.classList.toggle('active', j === i));
+            buildGallery();
+          });
+        });
+
+        buildGallery();
+      });
+    }
+
     loadProducts();
 
     // Nav scroll behavior
