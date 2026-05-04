@@ -316,6 +316,89 @@
     .btn-cd { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; background: #dc2626; border: none; padding: 9px 22px; border-radius: 100px; cursor: pointer; transition: background 0.2s; }
     .btn-cd:hover { background: #b91c1c; }
 
+    /* ===== TABS ===== */
+    .tab-bar {
+      display: flex; gap: 4px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 4px;
+      margin-bottom: 36px;
+    }
+    .tab-btn {
+      flex: 1; padding: 10px 16px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      background: none; border: none; border-radius: 9px;
+      color: var(--text-muted); cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active { background: var(--bg-card); color: var(--accent); box-shadow: 0 1px 8px rgba(123,79,166,0.1); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== CMS ===== */
+    .cms-section {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; margin-bottom: 16px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(123,79,166,0.05);
+    }
+    .cms-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .cms-section-header:hover { background: var(--accent-dim); }
+    .cms-section-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600; color: var(--text);
+    }
+    .cms-section-icon { font-size: 18px; }
+    .cms-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.25s; }
+    .cms-section.open .cms-chevron { transform: rotate(180deg); }
+    .cms-section-body { padding: 0 24px 24px; display: none; border-top: 1px solid var(--border); }
+    .cms-section.open .cms-section-body { display: block; padding-top: 20px; }
+    .cms-save-btn {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #fff; background: var(--accent); border: none;
+      padding: 10px 24px; border-radius: 100px; cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 4px 12px var(--accent-glow); margin-top: 16px;
+    }
+    .cms-save-btn:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* Testimonial editor */
+    .testimonial-editor { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .testimonial-item {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+      position: relative;
+    }
+    .testimonial-item .t-remove {
+      position: absolute; top: 12px; right: 12px;
+      width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border);
+      background: none; color: var(--text-muted); cursor: pointer; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .testimonial-item .t-remove:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+    .star-select { display: flex; gap: 4px; margin-top: 6px; }
+    .star-select span { font-size: 20px; cursor: pointer; opacity: 0.3; transition: opacity 0.15s; }
+    .star-select span.on { opacity: 1; }
+
+    /* Nav link editor */
+    .nav-link-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .nav-link-item {
+      display: grid; grid-template-columns: 1fr 1fr 28px; gap: 8px; align-items: center;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    }
+    .nav-link-item input { background: none; border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--text); }
+    .nav-link-item .nl-remove { width: 22px; height: 22px; border-radius: 50%; border: none; background: none; color: var(--text-muted); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: color 0.15s; }
+    .nav-link-item .nl-remove:hover { color: #dc2626; }
+    .btn-add-link {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); border: 1.5px dashed var(--border-bright); background: none;
+      padding: 8px 16px; border-radius: 8px; cursor: pointer; width: 100%;
+      transition: background 0.15s;
+    }
+    .btn-add-link:hover { background: var(--accent-dim); }
+
     @media (max-width: 700px) {
       header { padding: 0 20px; }
       main { padding: 28px 16px 60px; }
@@ -336,19 +419,145 @@
   </div>
   <div class="header-actions">
     <a href="/" class="btn-back">← საიტზე დაბრუნება</a>
-    <button class="btn-add" onclick="openModal()">+ ახალი პროდუქტი</button>
+    <button class="btn-add" id="btn-add-product" onclick="openModal()">+ ახალი პროდუქტი</button>
   </div>
 </header>
 
 <main>
-  <div class="section-header">
-    <div>
-      <div class="section-eyebrow">მართვის პანელი</div>
-      <h1 class="section-title">ჩემი <em>პროდუქტები</em></h1>
-    </div>
-    <span class="product-count" id="product-count"></span>
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('products')">🛍️ პროდუქტები</button>
+    <button class="tab-btn" onclick="switchTab('content')">✏️ საიტის შინაარსი</button>
   </div>
-  <div class="products-grid" id="products-grid"></div>
+
+  <!-- PRODUCTS TAB -->
+  <div class="tab-panel active" id="tab-products">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">მართვის პანელი</div>
+        <h1 class="section-title">ჩემი <em>პროდუქტები</em></h1>
+      </div>
+      <span class="product-count" id="product-count"></span>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+  <!-- CONTENT / CMS TAB -->
+  <div class="tab-panel" id="tab-content">
+    <div class="section-header" style="margin-bottom:0;">
+      <div>
+        <div class="section-eyebrow">CMS</div>
+        <h1 class="section-title">საიტის <em>შინაარსი</em></h1>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:28px;">ცვლილებები მომენტალურად აისახება საიტზე.</p>
+
+    <!-- HERO -->
+    <div class="cms-section" id="cms-hero">
+      <div class="cms-section-header" onclick="toggleCms('cms-hero')">
+        <div class="cms-section-title"><span class="cms-section-icon">🦸</span> Hero სექცია</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div class="form-group"><label>Eyebrow ტექსტი</label><input type="text" id="c-hero-eyebrow" /></div>
+        <div class="form-group"><label>სათაური (მონიშნული სიტყვა)</label><input type="text" id="c-hero-tagline" /><small style="font-size:10px;color:var(--text-muted);margin-top:4px;display:block;">მთლიანი ტექსტი. გამოყოფა: "tagline_em" ველში მიუთითეთ ის სიტყვა, რომელიც მეწამულად ჩანს.</small></div>
+        <div class="form-group"><label>გამოყოფილი სიტყვა (em)</label><input type="text" id="c-hero-tagline-em" /></div>
+        <div class="form-group"><label>აღწერა</label><textarea id="c-hero-desc" rows="3"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>CTA ღილაკი 1 — ტექსტი</label><input type="text" id="c-hero-cta1-text" /></div>
+          <div class="form-group"><label>CTA ღილაკი 1 — ლინკი</label><input type="text" id="c-hero-cta1-href" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>CTA ღილაკი 2 — ტექსტი</label><input type="text" id="c-hero-cta2-text" /></div>
+          <div class="form-group"><label>CTA ღილაკი 2 — ლინკი</label><input type="text" id="c-hero-cta2-href" /></div>
+        </div>
+        <button class="cms-save-btn" onclick="saveSection('hero')">შენახვა</button>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="cms-section" id="cms-about">
+      <div class="cms-section-header" onclick="toggleCms('cms-about')">
+        <div class="cms-section-title"><span class="cms-section-icon">🏢</span> ჩვენ შესახებ</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div class="form-row">
+          <div class="form-group"><label>Eyebrow</label><input type="text" id="c-about-eyebrow" /></div>
+          <div class="form-group"><label>სათაური</label><input type="text" id="c-about-title" /></div>
+        </div>
+        <div class="form-group"><label>სათაური — გამოყოფილი (em)</label><input type="text" id="c-about-title-em" /></div>
+        <div class="form-group"><label>პარაგრაფი 1</label><textarea id="c-about-p1" rows="3"></textarea></div>
+        <div class="form-group"><label>პარაგრაფი 2</label><textarea id="c-about-p2" rows="3"></textarea></div>
+        <div class="form-group"><label>ბარათის სათაური ("რატომ CORSÉ?")</label><input type="text" id="c-about-card-title" /></div>
+        <div class="form-group"><label>ბარათის ელემენტები (თითო ხაზზე)</label><textarea id="c-about-features" rows="6"></textarea></div>
+        <div class="form-group"><label>CTA ღილაკი ტექსტი</label><input type="text" id="c-about-cta" /></div>
+        <button class="cms-save-btn" onclick="saveSection('about')">შენახვა</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="cms-section" id="cms-stats">
+      <div class="cms-section-header" onclick="toggleCms('cms-stats')">
+        <div class="cms-section-title"><span class="cms-section-icon">📊</span> სტატისტიკა</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div id="stats-editor"></div>
+        <button class="cms-save-btn" onclick="saveSection('stats')">შენახვა</button>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="cms-section" id="cms-testimonials">
+      <div class="cms-section-header" onclick="toggleCms('cms-testimonials')">
+        <div class="cms-section-title"><span class="cms-section-icon">💬</span> მომხმარებელთა გამოხმაურებები</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div class="testimonial-editor" id="testimonial-editor"></div>
+        <button class="btn-add-link" onclick="addTestimonial()">+ გამოხმაურების დამატება</button>
+        <button class="cms-save-btn" onclick="saveSection('testimonials')">შენახვა</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="cms-section" id="cms-footer">
+      <div class="cms-section-header" onclick="toggleCms('cms-footer')">
+        <div class="cms-section-title"><span class="cms-section-icon">🦶</span> ფუტერი</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div class="form-group"><label>ბრენდის აღწერა</label><textarea id="c-footer-desc" rows="2"></textarea></div>
+        <div class="form-group"><label>საავტორო ტექსტი (copyright)</label><input type="text" id="c-footer-copy" /></div>
+        <div class="form-group"><label>ელ.ფოსტა</label><input type="text" id="c-footer-email" /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Instagram ლინკი</label><input type="text" id="c-footer-instagram" /></div>
+          <div class="form-group"><label>TikTok ლინკი</label><input type="text" id="c-footer-tiktok" /></div>
+        </div>
+        <div class="form-group"><label>WhatsApp ლინკი</label><input type="text" id="c-footer-whatsapp" /></div>
+        <button class="cms-save-btn" onclick="saveSection('footer')">შენახვა</button>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="cms-section" id="cms-nav">
+      <div class="cms-section-header" onclick="toggleCms('cms-nav')">
+        <div class="cms-section-title"><span class="cms-section-icon">🧭</span> ნავიგაცია</div>
+        <span class="cms-chevron">▼</span>
+      </div>
+      <div class="cms-section-body">
+        <div class="form-row">
+          <div class="form-group"><label>CTA ღილაკი ტექსტი</label><input type="text" id="c-nav-cta-text" /></div>
+          <div class="form-group"><label>CTA ღილაკი ლინკი</label><input type="text" id="c-nav-cta-href" /></div>
+        </div>
+        <label style="margin-bottom:10px;display:block;">მენიუს ლინკები</label>
+        <div class="nav-link-list" id="nav-link-editor"></div>
+        <button class="btn-add-link" onclick="addNavLink()">+ ლინკის დამატება</button>
+        <button class="cms-save-btn" onclick="saveSection('nav')">შენახვა</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <!-- ADD/EDIT MODAL -->
@@ -811,6 +1020,198 @@
   });
 
   loadProducts();
+
+  /* ===== TAB SWITCHING ===== */
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='products'&&i===0)||(tab==='content'&&i===1)));
+    document.getElementById('tab-products').classList.toggle('active', tab==='products');
+    document.getElementById('tab-content').classList.toggle('active', tab==='content');
+    document.getElementById('btn-add-product').style.display = tab==='products' ? '' : 'none';
+    if (tab === 'content') loadCmsContent();
+  }
+
+  /* ===== CMS ACCORDION ===== */
+  function toggleCms(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* ===== CMS STATE ===== */
+  let cmsContent = null;
+
+  async function loadCmsContent() {
+    if (cmsContent) { renderCms(); return; }
+    try {
+      const r = await fetch('/api/content');
+      cmsContent = await r.json();
+      renderCms();
+    } catch(e) { showToast('შინაარსის ჩატვირთვა ვერ მოხერხდა', 'error'); }
+  }
+
+  function val(id, v) { const el = document.getElementById(id); if (el) el.value = v || ''; }
+
+  function renderCms() {
+    const c = cmsContent;
+    if (!c) return;
+
+    // Hero
+    val('c-hero-eyebrow', c.hero?.eyebrow);
+    val('c-hero-tagline', c.hero?.tagline);
+    val('c-hero-tagline-em', c.hero?.tagline_em);
+    val('c-hero-desc', c.hero?.description);
+    val('c-hero-cta1-text', c.hero?.cta_primary_text);
+    val('c-hero-cta1-href', c.hero?.cta_primary_href);
+    val('c-hero-cta2-text', c.hero?.cta_secondary_text);
+    val('c-hero-cta2-href', c.hero?.cta_secondary_href);
+
+    // About
+    val('c-about-eyebrow', c.about?.eyebrow);
+    val('c-about-title', c.about?.title);
+    val('c-about-title-em', c.about?.title_em);
+    val('c-about-p1', c.about?.paragraph1);
+    val('c-about-p2', c.about?.paragraph2);
+    val('c-about-card-title', c.about?.card_title);
+    val('c-about-features', (c.about?.features || []).join('\n'));
+    val('c-about-cta', c.about?.cta_text);
+
+    // Stats
+    const statsEl = document.getElementById('stats-editor');
+    if (statsEl) statsEl.innerHTML = (c.stats || []).map((s, i) => `
+      <div class="form-row" style="margin-bottom:8px;">
+        <div class="form-group" style="margin:0;"><label>რიცხვი ${i+1}</label><input type="text" id="stat-num-${i}" value="${s.number||''}" /></div>
+        <div class="form-group" style="margin:0;"><label>ლეიბლი ${i+1}</label><input type="text" id="stat-lbl-${i}" value="${s.label||''}" /></div>
+      </div>`).join('');
+
+    // Testimonials
+    renderTestimonialEditor(c.testimonials || []);
+
+    // Footer
+    val('c-footer-desc', c.footer?.description);
+    val('c-footer-copy', c.footer?.copy);
+    val('c-footer-email', c.footer?.email);
+    val('c-footer-instagram', c.footer?.instagram);
+    val('c-footer-tiktok', c.footer?.tiktok);
+    val('c-footer-whatsapp', c.footer?.whatsapp);
+
+    // Nav
+    val('c-nav-cta-text', c.nav?.cta_text);
+    val('c-nav-cta-href', c.nav?.cta_href);
+    renderNavLinkEditor(c.nav?.links || []);
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  let testimonials = [];
+
+  function renderTestimonialEditor(list) {
+    testimonials = list.map(t => ({...t}));
+    const el = document.getElementById('testimonial-editor');
+    el.innerHTML = testimonials.map((t, i) => `
+      <div class="testimonial-item">
+        <button class="t-remove" onclick="removeTestimonial(${i})">✕</button>
+        <div class="form-group" style="margin-bottom:10px;"><label>კომენტარი</label><textarea rows="2" oninput="testimonials[${i}].text=this.value" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--text);outline:none;resize:vertical;">${t.text||''}</textarea></div>
+        <div class="form-row">
+          <div class="form-group" style="margin:0;"><label>სახელი</label><input type="text" value="${t.author||''}" oninput="testimonials[${i}].author=this.value" /></div>
+          <div class="form-group" style="margin:0;"><label>ქალაქი</label><input type="text" value="${t.location||''}" oninput="testimonials[${i}].location=this.value" /></div>
+        </div>
+        <label style="margin-top:12px;display:block;">შეფასება</label>
+        <div class="star-select">${[1,2,3,4,5].map(n=>`<span class="${n<=(t.rating||5)?'on':''}" onclick="setRating(${i},${n})">★</span>`).join('')}</div>
+      </div>`).join('');
+  }
+
+  function addTestimonial() {
+    testimonials.push({ id: 't'+Date.now(), text:'', author:'', location:'', rating:5 });
+    renderTestimonialEditor(testimonials);
+  }
+
+  function removeTestimonial(i) {
+    testimonials.splice(i, 1);
+    renderTestimonialEditor(testimonials);
+  }
+
+  function setRating(i, n) {
+    testimonials[i].rating = n;
+    renderTestimonialEditor(testimonials);
+  }
+
+  /* ===== NAV LINKS ===== */
+  let navLinks = [];
+
+  function renderNavLinkEditor(list) {
+    navLinks = list.map(l => ({...l}));
+    const el = document.getElementById('nav-link-editor');
+    el.innerHTML = navLinks.map((l, i) => `
+      <div class="nav-link-item">
+        <input type="text" placeholder="სახელი" value="${l.label||''}" oninput="navLinks[${i}].label=this.value" />
+        <input type="text" placeholder="#anchor" value="${l.href||''}" oninput="navLinks[${i}].href=this.value" />
+        <button class="nl-remove" onclick="removeNavLink(${i})">✕</button>
+      </div>`).join('');
+  }
+
+  function addNavLink() {
+    navLinks.push({ label: '', href: '#' });
+    renderNavLinkEditor(navLinks);
+  }
+
+  function removeNavLink(i) {
+    navLinks.splice(i, 1);
+    renderNavLinkEditor(navLinks);
+  }
+
+  /* ===== SAVE SECTION ===== */
+  async function saveSection(section) {
+    if (!cmsContent) return;
+
+    if (section === 'hero') {
+      cmsContent.hero = {
+        eyebrow: document.getElementById('c-hero-eyebrow').value,
+        tagline: document.getElementById('c-hero-tagline').value,
+        tagline_em: document.getElementById('c-hero-tagline-em').value,
+        description: document.getElementById('c-hero-desc').value,
+        cta_primary_text: document.getElementById('c-hero-cta1-text').value,
+        cta_primary_href: document.getElementById('c-hero-cta1-href').value,
+        cta_secondary_text: document.getElementById('c-hero-cta2-text').value,
+        cta_secondary_href: document.getElementById('c-hero-cta2-href').value,
+      };
+    } else if (section === 'about') {
+      cmsContent.about = {
+        eyebrow: document.getElementById('c-about-eyebrow').value,
+        title: document.getElementById('c-about-title').value,
+        title_em: document.getElementById('c-about-title-em').value,
+        paragraph1: document.getElementById('c-about-p1').value,
+        paragraph2: document.getElementById('c-about-p2').value,
+        card_title: document.getElementById('c-about-card-title').value,
+        features: document.getElementById('c-about-features').value.split('\n').map(s=>s.trim()).filter(Boolean),
+        cta_text: document.getElementById('c-about-cta').value,
+      };
+    } else if (section === 'stats') {
+      cmsContent.stats = (cmsContent.stats || []).map((_, i) => ({
+        number: document.getElementById(`stat-num-${i}`)?.value || '',
+        label: document.getElementById(`stat-lbl-${i}`)?.value || '',
+      }));
+    } else if (section === 'testimonials') {
+      cmsContent.testimonials = testimonials;
+    } else if (section === 'footer') {
+      cmsContent.footer = {
+        description: document.getElementById('c-footer-desc').value,
+        copy: document.getElementById('c-footer-copy').value,
+        email: document.getElementById('c-footer-email').value,
+        instagram: document.getElementById('c-footer-instagram').value,
+        tiktok: document.getElementById('c-footer-tiktok').value,
+        whatsapp: document.getElementById('c-footer-whatsapp').value,
+      };
+    } else if (section === 'nav') {
+      cmsContent.nav = {
+        cta_text: document.getElementById('c-nav-cta-text').value,
+        cta_href: document.getElementById('c-nav-cta-href').value,
+        links: navLinks,
+      };
+    }
+
+    try {
+      const r = await fetch('/api/content', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(cmsContent) });
+      if (r.ok) showToast('შენახულია ✓', 'success');
+      else showToast('შეცდომა შენახვისას', 'error');
+    } catch { showToast('კავშირის შეცდომა', 'error'); }
+  }
 </script>
 </body>
 </html>

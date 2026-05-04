@@ -67,6 +67,32 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // GET /api/content
+  if (req.url === '/api/content' && req.method === 'GET') {
+    const filePath = path.join(__dirname, 'content.json');
+    fs.readFile(filePath, (err, data) => {
+      if (err) return json(res, 500, { error: 'Could not read content' });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(data);
+    });
+    return;
+  }
+
+  // POST /api/content — save entire content object
+  if (req.url === '/api/content' && req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      const filePath = path.join(__dirname, 'content.json');
+      fs.writeFile(filePath, JSON.stringify(body, null, 2), err => {
+        if (err) return json(res, 500, { error: 'Could not save content' });
+        json(res, 200, { ok: true });
+      });
+    } catch {
+      json(res, 400, { error: 'Invalid JSON' });
+    }
+    return;
+  }
+
   // POST /api/products — save entire products array
   if (req.url === '/api/products' && req.method === 'POST') {
     try {
@@ -105,6 +131,7 @@ const server = http.createServer(async (req, res) => {
 
   // Static file serving
   let urlPath = req.url.split('?')[0];
+  try { urlPath = decodeURIComponent(urlPath); } catch {}
   if (urlPath === '/') urlPath = '/index.html';
 
   const filePath = path.join(__dirname, urlPath);
