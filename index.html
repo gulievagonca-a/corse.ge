@@ -626,6 +626,10 @@
     .products {
       background: var(--bg);
     }
+    .products .section-inner {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
     .products-header {
       text-align: center;
       margin-bottom: 64px;
@@ -725,6 +729,23 @@
       color: var(--text-muted);
       margin-bottom: 20px;
     }
+    /* ===== SIZE BUTTONS ===== */
+    .size-btn-row {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px;
+    }
+    .size-btn {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.07em;
+      color: var(--text-muted); border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 9px;
+      background: transparent; cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+      white-space: nowrap; user-select: none;
+    }
+    .size-btn:hover, .size-btn.selected {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim);
+    }
+
     .product-footer {
       display: flex;
       align-items: center;
@@ -1107,39 +1128,67 @@
       position: relative; width: 100%; aspect-ratio: 3/4;
       background: #F5F3EF; overflow: hidden;
     }
-    .gallery-slide {
-      position: absolute; inset: 0;
+    .gallery-main-img {
+      width: 100%; height: 100%; object-fit: contain; padding: 8px;
+      display: block; transition: opacity 0.3s ease;
+    }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.38s ease;
+      font-size: 80px; opacity: 0.55;
     }
-    .gallery-slide.active { opacity: 1; }
-    .gallery-slide img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
-    .gallery-slide .gal-icon { font-size: 80px; opacity: 0.55; }
-    .gallery-dots {
-      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 5px; z-index: 3;
+    .gallery-clickable { cursor: zoom-in; }
+    .gallery-count-badge {
+      position: absolute; bottom: 10px; right: 10px;
+      background: rgba(0,0,0,0.45); color: #fff;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      padding: 3px 8px; border-radius: 20px;
+      pointer-events: none;
     }
-    .gallery-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(51,51,51,0.2); cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .gallery-dot.active { background: var(--accent); transform: scale(1.4); }
-    .gallery-nav-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(255,255,255,0.88); backdrop-filter: blur(4px);
-      border: 1px solid var(--border);
+
+    /* ===== LIGHTBOX ===== */
+    #lb-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(10,8,14,0.93); backdrop-filter: blur(12px);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 3; color: var(--accent);
-      font-size: 16px; line-height: 1; opacity: 0;
-      transition: opacity 0.2s, background 0.2s;
-      box-shadow: 0 2px 8px rgba(123,79,166,0.1);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
     }
-    .product-card:hover .gallery-nav-btn { opacity: 1; }
-    .gallery-prev { left: 8px; }
-    .gallery-next { right: 8px; }
-    .gallery-nav-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    #lb-overlay.open { opacity: 1; pointer-events: all; }
+    #lb-img-wrap {
+      position: relative; max-width: min(90vw, 700px); max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #lb-img {
+      max-width: 100%; max-height: 88vh; object-fit: contain;
+      border-radius: 4px;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    #lb-img.switching { opacity: 0; transform: scale(0.97); }
+    #lb-close {
+      position: fixed; top: 20px; right: 24px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.2); }
+    .lb-arrow {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 9001;
+    }
+    .lb-arrow:hover { background: var(--accent); border-color: var(--accent); }
+    #lb-prev { left: 20px; }
+    #lb-next { right: 20px; }
+    #lb-counter {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.08em;
+    }
 
     /* ===== CARD COLOR SWATCHES ===== */
     .card-swatches { display: flex; align-items: center; gap: 7px; padding: 12px 24px 0; }
@@ -1274,45 +1323,9 @@
     <div class="stat-item"><div class="stat-number">30</div><div class="stat-label">დღის დაბრუნების გარანტია</div></div>
   </div>
 
-  <!-- ===== ABOUT ===== -->
-  <section class="about" id="about">
-    <div class="section-inner">
-      <div class="about-grid">
-        <div class="about-text fade-in">
-          <span class="section-eyebrow" id="about-eyebrow">ჩვენ შესახებ</span>
-          <h2 class="section-title" id="about-title">ყოველი ქალის<br /><em id="about-title-em">დამსახურებული სიმარჯვე</em></h2>
-          <div class="divider"></div>
-          <p id="about-p1">CORSÉ შეიქმნა იმისთვის, რომ მხარი დაუჭიროს <strong>ქალის სიყვარულს საკუთარი სხეულის მიმართ</strong>. ჩვენი slimming belt პროდუქტები მხოლოდ ესთეტიკური გადაწყვეტა კი არ არის — ეს არის <strong>ცხოვრების სტილი</strong>, რომელიც ყოველდღიურ ცხოვრებაში განსხვავებას ქმნის.</p>
-          <p id="about-p2">პრემიუმ მასალები, დახვეწილი დამუშავება და სამეცნიერო დიზაინი — ჩვენი კოლექცია ყველა სხეულის ტიპს ერგება. არ ავიწროებს, ამშვიდებს — <strong>ასახავს შენს თავდაჯერებულობას.</strong></p>
-          <div style="margin-top: 32px;">
-            <a href="#products" class="btn-primary" id="about-cta">კოლექციის დათვალიერება</a>
-          </div>
-        </div>
-        <div class="about-visual fade-in">
-          <div class="about-card">
-            <div class="about-card-title" id="about-card-title">რატომ CORSÉ?</div>
-            <ul class="feature-list" id="about-features">
-              <li>სამედიცინოდ დამტკიცებული მაღალი ხარისხის ქსოვილის ტექნოლოგია</li>
-              <li>ოფლის გამტარი, სუნთქვადი დიზაინი</li>
-              <li>დღეში მხოლოდ 1-2 საათის ტარებით — თვალსაჩინო შედეგი</li>
-              <li>ყველა სხეულის ტიპისთვის მორგებული სპეციალური ჭრა</li>
-              <li>საქართველოში სწრაფი და უფასო მიტანა</li>
-              <li>30-დღიანი უპირობო დაბრუნების გარანტია</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== PRODUCTS ===== -->
   <section class="products" id="products">
     <div class="section-inner">
-      <div class="products-header fade-in">
-        <span class="section-eyebrow">კოლექცია</span>
-        <h2 class="section-title">პრემიუმ <em>Slimming Belt</em> სერია</h2>
-        <div class="divider" style="margin: 24px auto;"></div>
-      </div>
       <div class="products-grid" id="products-grid"></div>
     </div>
   </section>
@@ -1517,6 +1530,15 @@
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     // Render products from JSON
+    const SIZE_ORDER = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','XS/S','S/M','L/XL','2XL/3XL','4XL/5XL'];
+    function sizeRank(s) {
+      const idx = SIZE_ORDER.indexOf(s);
+      if (idx >= 0) return idx;
+      const fi = SIZE_ORDER.indexOf(s.split('/')[0]);
+      return fi >= 0 ? fi + 0.5 : 99;
+    }
+    function sortSizes(arr) { return [...arr].sort((a,b) => sizeRank(a) - sizeRank(b)); }
+
     async function loadProducts() {
       const grid = document.getElementById('products-grid');
       try {
@@ -1534,10 +1556,9 @@
                       style="background:${c.hex}" data-ci="${i}" title="${c.name}"></div>`
               ).join('')}</div>` : '';
 
-          const sizesHtml = p.sizes && p.sizes.length
-            ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${
-                p.sizes.map(s=>`<span style="font-size:9px;font-weight:700;letter-spacing:0.08em;color:var(--text-muted);border:1px solid var(--border);border-radius:5px;padding:2px 7px;">${s}</span>`).join('')
-              }</div>` : '';
+          const sortedSizes = sortSizes(Array.isArray(p.sizes) ? p.sizes : []);
+          const sizesHtml = sortedSizes.length
+            ? `<div class="size-btn-row">${sortedSizes.map(s=>`<button class="size-btn" type="button">${s}</button>`).join('')}</div>` : '';
 
           const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
           const defaultImgs = JSON.stringify(Array.isArray(p.images) ? p.images : []).replace(/'/g, '&#39;');
@@ -1589,53 +1610,32 @@
           const gallery = card.querySelector('.product-gallery');
           const images = imgs();
           gallery.innerHTML = '';
+          gallery.onclick = null;
 
           if (images.length) {
-            images.forEach((src, i) => {
-              const slide = document.createElement('div');
-              slide.className = 'gallery-slide' + (i === activeSlide ? ' active' : '');
-              const img = document.createElement('img');
-              img.src = src; img.loading = 'lazy';
-              slide.appendChild(img);
-              gallery.appendChild(slide);
-            });
+            const src = images[activeSlide] || images[0];
+            const img = document.createElement('img');
+            img.className = 'gallery-main-img' + (images.length > 1 ? ' gallery-clickable' : '');
+            img.src = src;
+            img.loading = 'lazy';
+            img.alt = '';
+            gallery.appendChild(img);
 
             if (images.length > 1) {
-              const dotsDiv = document.createElement('div');
-              dotsDiv.className = 'gallery-dots';
-              images.forEach((_, i) => {
-                const dot = document.createElement('div');
-                dot.className = 'gallery-dot' + (i === activeSlide ? ' active' : '');
-                dot.addEventListener('click', e => { e.stopPropagation(); activeSlide = i; buildGallery(); });
-                dotsDiv.appendChild(dot);
-              });
-              gallery.appendChild(dotsDiv);
+              const badge = document.createElement('div');
+              badge.className = 'gallery-count-badge';
+              badge.textContent = (activeSlide + 1) + '/' + images.length;
+              gallery.appendChild(badge);
 
-              const mkBtn = (cls, html) => {
-                const b = document.createElement('button');
-                b.className = 'gallery-nav-btn ' + cls;
-                b.innerHTML = html; b.type = 'button';
-                return b;
+              gallery.onclick = () => {
+                if (typeof openLightbox === 'function') openLightbox(images, activeSlide);
               };
-              const prev = mkBtn('gallery-prev', '&#8249;');
-              const next = mkBtn('gallery-next', '&#8250;');
-              prev.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); activeSlide = (activeSlide - 1 + images.length) % images.length; buildGallery(); });
-              next.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); activeSlide = (activeSlide + 1) % images.length; buildGallery(); });
-              gallery.appendChild(prev);
-              gallery.appendChild(next);
-
-              let tx = 0;
-              gallery.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
-              gallery.addEventListener('touchend', e => {
-                const dx = e.changedTouches[0].clientX - tx;
-                if (Math.abs(dx) > 40) { activeSlide = dx < 0 ? (activeSlide+1)%images.length : (activeSlide-1+images.length)%images.length; buildGallery(); }
-              }, { passive: true });
             }
           } else {
-            const slide = document.createElement('div');
-            slide.className = 'gallery-slide active';
-            slide.innerHTML = `<span class="gal-icon">${icon}</span>`;
-            gallery.appendChild(slide);
+            const ph = document.createElement('div');
+            ph.className = 'gallery-placeholder';
+            ph.textContent = icon;
+            gallery.appendChild(ph);
           }
         }
 
@@ -1648,10 +1648,27 @@
           });
         });
 
-        // Init with default images
+        // Init: prefer default images; fall back to first color that has images
         activeColor = -1;
+        if (!defaultImages.length && colors.length > 0) {
+          const firstWithImages = colors.findIndex(c => Array.isArray(c.images) && c.images.length);
+          if (firstWithImages >= 0) {
+            activeColor = firstWithImages;
+            card.querySelectorAll('.card-swatch').forEach((s, j) => s.classList.toggle('active', j === firstWithImages));
+          }
+        }
 
         buildGallery();
+
+        // Size button toggle
+        card.querySelectorAll('.size-btn').forEach(btn => {
+          btn.addEventListener('click', e => {
+            e.preventDefault();
+            const wasSelected = btn.classList.contains('selected');
+            card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+            if (!wasSelected) btn.classList.add('selected');
+          });
+        });
       });
     }
 
@@ -1688,11 +1705,13 @@
           const em = c.hero.tagline_em || '';
           tagline.innerHTML = c.hero.tagline.replace(em, `<em>${em}</em>`);
         }
+        const descEl = document.getElementById('hero-desc');
+        if (descEl) descEl.style.display = c.hero.description ? '' : 'none';
         set('hero-desc', c.hero.description);
         const p = document.getElementById('hero-cta-primary');
-        if (p) { if (c.hero.cta_primary_text) p.textContent = c.hero.cta_primary_text; if (c.hero.cta_primary_href) p.href = c.hero.cta_primary_href; }
+        if (p) { p.style.display = c.hero.cta_primary_text ? '' : 'none'; if (c.hero.cta_primary_text) p.textContent = c.hero.cta_primary_text; if (c.hero.cta_primary_href) p.href = c.hero.cta_primary_href; }
         const s = document.getElementById('hero-cta-secondary');
-        if (s) { if (c.hero.cta_secondary_text) s.textContent = c.hero.cta_secondary_text; if (c.hero.cta_secondary_href) s.href = c.hero.cta_secondary_href; }
+        if (s) { s.style.display = c.hero.cta_secondary_text ? '' : 'none'; if (c.hero.cta_secondary_text) s.textContent = c.hero.cta_secondary_text; if (c.hero.cta_secondary_href) s.href = c.hero.cta_secondary_href; }
       }
 
       // STATS
@@ -1776,6 +1795,76 @@
         nav.style.boxShadow = '0 1px 20px rgba(123,79,166,0.06)';
       }
     });
+  </script>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lb-overlay" role="dialog" aria-modal="true" aria-label="Image gallery">
+    <div id="lb-img-wrap">
+      <img id="lb-img" src="" alt="Product image" />
+    </div>
+    <button id="lb-close" aria-label="Close">&#215;</button>
+    <button class="lb-arrow" id="lb-prev" aria-label="Previous">&#8249;</button>
+    <button class="lb-arrow" id="lb-next" aria-label="Next">&#8250;</button>
+    <div id="lb-counter"></div>
+  </div>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById('lb-overlay');
+      const lbImg   = document.getElementById('lb-img');
+      const counter = document.getElementById('lb-counter');
+      let lbImages = [], lbIndex = 0, touchStartX = 0;
+
+      function lbShow(images, startIndex) {
+        if (!images || images.length <= 1) return;
+        lbImages = images;
+        lbIndex  = startIndex || 0;
+        renderLb();
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function lbClose() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function renderLb(direction) {
+        lbImg.classList.add('switching');
+        setTimeout(() => {
+          lbImg.src = lbImages[lbIndex];
+          lbImg.onload = () => lbImg.classList.remove('switching');
+          lbImg.onerror = () => lbImg.classList.remove('switching');
+          counter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+        }, 120);
+      }
+
+      function lbGo(dir) {
+        lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+        renderLb();
+      }
+
+      document.getElementById('lb-close').addEventListener('click', lbClose);
+      document.getElementById('lb-prev').addEventListener('click', () => lbGo(-1));
+      document.getElementById('lb-next').addEventListener('click', () => lbGo(1));
+
+      overlay.addEventListener('click', e => { if (e.target === overlay) lbClose(); });
+
+      document.addEventListener('keydown', e => {
+        if (!overlay.classList.contains('open')) return;
+        if (e.key === 'Escape')      lbClose();
+        if (e.key === 'ArrowLeft')   lbGo(-1);
+        if (e.key === 'ArrowRight')  lbGo(1);
+      });
+
+      overlay.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      overlay.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) lbGo(dx < 0 ? 1 : -1);
+      }, { passive: true });
+
+      window.openLightbox = lbShow;
+    })();
   </script>
 
 </body>

@@ -600,6 +600,7 @@
       <div class="form-group">
         <label>ხელმისაწვდომი ზომები</label>
         <div class="size-grid">
+          <div style="width:100%;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">— ერთიანი —</div>
           <div class="size-pill"><input type="checkbox" id="sz-xs"  value="XS" ><label for="sz-xs">XS</label></div>
           <div class="size-pill"><input type="checkbox" id="sz-s"   value="S"  ><label for="sz-s">S</label></div>
           <div class="size-pill"><input type="checkbox" id="sz-m"   value="M"  ><label for="sz-m">M</label></div>
@@ -609,6 +610,12 @@
           <div class="size-pill"><input type="checkbox" id="sz-3xl" value="3XL"><label for="sz-3xl">3XL</label></div>
           <div class="size-pill"><input type="checkbox" id="sz-4xl" value="4XL"><label for="sz-4xl">4XL</label></div>
           <div class="size-pill"><input type="checkbox" id="sz-5xl" value="5XL"><label for="sz-5xl">5XL</label></div>
+          <div style="width:100%;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;margin-bottom:2px;">— კომბინირებული —</div>
+          <div class="size-pill"><input type="checkbox" id="sz-xs-s"     value="XS/S"    ><label for="sz-xs-s">XS/S</label></div>
+          <div class="size-pill"><input type="checkbox" id="sz-s-m"      value="S/M"     ><label for="sz-s-m">S/M</label></div>
+          <div class="size-pill"><input type="checkbox" id="sz-l-xl"     value="L/XL"    ><label for="sz-l-xl">L/XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="sz-2xl-3xl"  value="2XL/3XL" ><label for="sz-2xl-3xl">2XL/3XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="sz-4xl-5xl"  value="4XL/5XL" ><label for="sz-4xl-5xl">4XL/5XL</label></div>
         </div>
       </div>
 
@@ -693,6 +700,20 @@
     return colorData
       .filter(c => c.enabled)
       .map(c => ({ name: c.name, hex: c.hex, images: c.images.filter(i => i.trim()) }));
+  }
+
+  /* ===== SIZE SORT HELPER ===== */
+  const SIZE_ORDER = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','XS/S','S/M','L/XL','2XL/3XL','4XL/5XL'];
+  function sizeRank(s) {
+    const idx = SIZE_ORDER.indexOf(s);
+    if (idx >= 0) return idx;
+    // Fallback for unknown: sort by first part
+    const first = s.split('/')[0];
+    const fi = SIZE_ORDER.indexOf(first);
+    return fi >= 0 ? fi + 0.5 : 99;
+  }
+  function sortSizes(arr) {
+    return [...arr].sort((a, b) => sizeRank(a) - sizeRank(b));
   }
 
   /* ===== LOAD ===== */
@@ -951,7 +972,7 @@
     btn.disabled = true; btn.textContent = 'შენახვა...';
 
     const existingId = document.getElementById('f-id').value;
-    const sizes  = Array.from(document.querySelectorAll('.size-pill input:checked')).map(el => el.value);
+    const sizes  = sortSizes(Array.from(document.querySelectorAll('.size-pill input:checked')).map(el => el.value));
     const colors = buildProductColors();
     const images = productImages.filter(i => i.trim());
 
