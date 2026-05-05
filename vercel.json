@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/api/products", "destination": "/api/products.js" },
+    { "source": "/api/content",  "destination": "/api/content.js"  },
+    { "source": "/api/upload",   "destination": "/api/upload.js"   }
+  ]
+}
