@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_OWNER = process.env.GITHUB_OWNER || 'gulievagonca-a';
-const GITHUB_REPO  = process.env.GITHUB_REPO  || 'corse.ge';
+const GITHUB_OWNER = 'gulievagonca-a';
+const GITHUB_REPO  = 'corse.ge';
 const FILE_PATH    = 'products.json';
 
 async function getFileSha() {
@@ -56,10 +56,6 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      if (!GITHUB_TOKEN) {
-        res.status(503).json({ error: 'GITHUB_TOKEN not configured' });
-        return;
-      }
       const sha = await getFileSha();
       const ok  = await commitFile(body, sha);
       if (ok) {
