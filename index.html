@@ -1339,28 +1339,28 @@
     </div>
     <div class="sidebar-body">
       <div class="sidebar-section-label">კატეგორიები</div>
-      <a href="#products" class="sidebar-item" onclick="closeSidebar()">
+      <a href="#products" class="sidebar-item" onclick="applyFilter('featured');closeSidebar();" data-filter="featured">
         <span class="sidebar-item-icon">🏆</span>
         ყველაზე პოპულარული
         <span class="sidebar-badge hot">Hot</span>
       </a>
-      <a href="#products" class="sidebar-item" onclick="closeSidebar()">
+      <a href="#products" class="sidebar-item" onclick="applyFilter('sale');closeSidebar();" data-filter="sale">
         <span class="sidebar-item-icon">🏷️</span>
         ფასდაკლებული პროდუქტები
         <span class="sidebar-badge">Sale</span>
       </a>
-      <a href="#products" class="sidebar-item" onclick="closeSidebar()">
+      <a href="#products" class="sidebar-item" onclick="applyFilter('new');closeSidebar();" data-filter="new">
         <span class="sidebar-item-icon">✨</span>
         სიახლეები
         <span class="sidebar-badge new">New</span>
       </a>
       <div class="sidebar-divider"></div>
       <div class="sidebar-section-label">კოლექციები</div>
-      <a href="#products" class="sidebar-item" onclick="closeSidebar()">
+      <a href="#products" class="sidebar-item" onclick="applyFilter('collection:ქალის');closeSidebar();" data-filter="collection:ქალის">
         <span class="sidebar-item-icon">👗</span>
         ქალის
       </a>
-      <a href="#products" class="sidebar-item" onclick="closeSidebar()">
+      <a href="#products" class="sidebar-item" onclick="applyFilter('collection:მამაკაცის');closeSidebar();" data-filter="collection:მამაკაცის">
         <span class="sidebar-item-icon">👔</span>
         მამაკაცის
       </a>
@@ -1693,51 +1693,84 @@
     }
     function sortSizes(arr) { return [...arr].sort((a,b) => sizeRank(a) - sizeRank(b)); }
 
+    let allProducts = [];
+
+    function productCard(p) {
+      const colors = Array.isArray(p.colors) ? p.colors : [];
+      const icon = p.icon || '✨';
+      const swatchesHtml = colors.length > 1
+        ? `<div class="card-swatches">${colors.map((c, i) =>
+            `<div class="card-swatch${i===0?' active':''}${c.hex==='#FFFFFF'?' swatch-white':''}"
+                  style="background:${c.hex}" data-ci="${i}" title="${c.name}"></div>`
+          ).join('')}</div>` : '';
+      const sortedSizes = sortSizes(Array.isArray(p.sizes) ? p.sizes : []);
+      const sizesHtml = sortedSizes.length
+        ? `<div class="size-btn-row">${sortedSizes.map(s=>`<button class="size-btn" type="button">${s}</button>`).join('')}</div>` : '';
+      const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
+      const defaultImgs = JSON.stringify(Array.isArray(p.images) ? p.images : []).replace(/'/g, '&#39;');
+      const saleBadge = p.isSale ? '<div class="featured-badge-el" style="background:#dc2626;">SALE</div>' : '';
+      const priceHtml = p.isSale && p.salePrice
+        ? `<div class="product-price"><span style="text-decoration:line-through;font-size:16px;color:var(--text-muted);margin-right:6px;">₾${p.price}</span>₾${p.salePrice} <span>GEL</span></div>`
+        : `<div class="product-price">₾${p.price} <span>GEL</span></div>`;
+      return `
+        <div class="product-card ${p.featured?'featured':''} fade-in"
+             data-colors='${colorsStr}' data-icon="${icon}" data-images='${defaultImgs}'>
+          ${p.featured ? '<div class="featured-badge-el">ყველაზე პოპულარული</div>' : ''}
+          ${saleBadge}
+          <div class="product-gallery"></div>
+          ${swatchesHtml}
+          <div class="product-body">
+            <div class="product-category">${p.category}</div>
+            <div class="product-name">${p.name}</div>
+            <p class="product-desc">${p.description}</p>
+            ${sizesHtml}
+            <div class="product-footer">
+              ${priceHtml}
+              <a href="#" class="product-btn">დეტალები</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderProducts(list) {
+      const grid = document.getElementById('products-grid');
+      if (!list.length) {
+        grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;grid-column:1/-1;">პროდუქტები ვერ მოიძებნა.</p>';
+        return;
+      }
+      grid.innerHTML = list.map(productCard).join('');
+      initCards();
+      document.querySelectorAll('#products-grid .fade-in').forEach(el => observer.observe(el));
+    }
+
+    function applyFilter(filter) {
+      let result = [...allProducts];
+      if (filter === 'featured')   result = result.filter(p => p.featured);
+      else if (filter === 'sale')  result = result.filter(p => p.isSale);
+      else if (filter === 'new')   result = [...result].reverse();
+      else if (filter.startsWith('collection:')) {
+        const col = filter.split(':')[1];
+        result = result.filter(p => p.collection === col);
+      }
+      renderProducts(result);
+
+      // highlight active filter in sidebar
+      document.querySelectorAll('.sidebar-item[data-filter]').forEach(el => {
+        el.style.background = el.dataset.filter === filter ? 'var(--accent-dim)' : '';
+        el.style.color = el.dataset.filter === filter ? 'var(--accent)' : '';
+      });
+
+      // scroll to products section
+      document.getElementById('products').scrollIntoView({behavior:'smooth'});
+    }
+
     async function loadProducts() {
       const grid = document.getElementById('products-grid');
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
-        const products = data.products || [];
-
-        grid.innerHTML = products.map(p => {
-          const colors = Array.isArray(p.colors) ? p.colors : [];
-          const icon = p.icon || '✨';
-
-          const swatchesHtml = colors.length > 1
-            ? `<div class="card-swatches">${colors.map((c, i) =>
-                `<div class="card-swatch${i===0?' active':''}${c.hex==='#FFFFFF'?' swatch-white':''}"
-                      style="background:${c.hex}" data-ci="${i}" title="${c.name}"></div>`
-              ).join('')}</div>` : '';
-
-          const sortedSizes = sortSizes(Array.isArray(p.sizes) ? p.sizes : []);
-          const sizesHtml = sortedSizes.length
-            ? `<div class="size-btn-row">${sortedSizes.map(s=>`<button class="size-btn" type="button">${s}</button>`).join('')}</div>` : '';
-
-          const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
-          const defaultImgs = JSON.stringify(Array.isArray(p.images) ? p.images : []).replace(/'/g, '&#39;');
-
-          return `
-            <div class="product-card ${p.featured?'featured':''} fade-in"
-                 data-colors='${colorsStr}' data-icon="${icon}" data-images='${defaultImgs}'>
-              ${p.featured ? '<div class="featured-badge-el">ყველაზე პოპულარული</div>' : ''}
-              <div class="product-gallery"></div>
-              ${swatchesHtml}
-              <div class="product-body">
-                <div class="product-category">${p.category}</div>
-                <div class="product-name">${p.name}</div>
-                <p class="product-desc">${p.description}</p>
-                ${sizesHtml}
-                <div class="product-footer">
-                  <div class="product-price">₾${p.price} <span>GEL</span></div>
-                  <a href="#" class="product-btn">დეტალები</a>
-                </div>
-              </div>
-            </div>`;
-        }).join('');
-
-        initCards();
-        document.querySelectorAll('#products-grid .fade-in').forEach(el => observer.observe(el));
+        allProducts = data.products || [];
+        renderProducts(allProducts);
       } catch {
         grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">პროდუქტები ვერ ჩაიტვირთა.</p>';
       }

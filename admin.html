@@ -597,6 +597,34 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group">
+          <label>კოლექცია</label>
+          <select id="f-collection" style="font-family:'Montserrat',sans-serif;font-size:13px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;color:var(--text);outline:none;width:100%;cursor:pointer;">
+            <option value="">— არ არის მითითებული —</option>
+            <option value="ქალის">👗 ქალის</option>
+            <option value="მამაკაცის">👔 მამაკაცის</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ფასდაკლების ფასი (₾)</label>
+          <input type="number" id="f-sale-price" placeholder="99" min="0" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="toggle-row">
+          <div class="toggle-label">
+            ფასდაკლებაში
+            <small>პროდუქტი "Sale" კატეგორიაში გამოჩნდება</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="f-is-sale" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
       <div class="form-group">
         <label>ხელმისაწვდომი ზომები</label>
         <div class="size-grid">
@@ -906,13 +934,16 @@
     clearForm();
 
     if (product) {
-      document.getElementById('f-id').value        = product.id;
-      document.getElementById('f-name').value      = product.name;
-      document.getElementById('f-category').value  = product.category;
+      document.getElementById('f-id').value          = product.id;
+      document.getElementById('f-name').value        = product.name;
+      document.getElementById('f-category').value    = product.category;
       document.getElementById('f-description').value = product.description;
-      document.getElementById('f-price').value     = product.price;
-      document.getElementById('f-icon').value      = product.icon || '';
-      document.getElementById('f-featured').checked = product.featured;
+      document.getElementById('f-price').value       = product.price;
+      document.getElementById('f-icon').value        = product.icon || '';
+      document.getElementById('f-featured').checked  = product.featured;
+      document.getElementById('f-collection').value  = product.collection || '';
+      document.getElementById('f-is-sale').checked   = product.isSale || false;
+      document.getElementById('f-sale-price').value  = product.salePrice || '';
       document.querySelectorAll('.size-pill input').forEach(el => {
         el.checked = Array.isArray(product.sizes) && product.sizes.includes(el.value);
       });
@@ -940,7 +971,7 @@
   }
 
   function clearForm() {
-    ['f-id','f-name','f-category','f-description','f-price','f-icon'].forEach(id => {
+    ['f-id','f-name','f-category','f-description','f-price','f-icon','f-sale-price'].forEach(id => {
       document.getElementById(id).value = '';
     });
     document.getElementById('f-featured').checked = false;
@@ -976,11 +1007,15 @@
     const colors = buildProductColors();
     const images = productImages.filter(i => i.trim());
 
+    const salePriceRaw = document.getElementById('f-sale-price').value.trim();
     const product = {
       id:          existingId || 'prod_' + Date.now(),
       name, category, description, price,
       icon:        document.getElementById('f-icon').value.trim() || '✨',
       featured:    document.getElementById('f-featured').checked,
+      collection:  document.getElementById('f-collection').value,
+      isSale:      document.getElementById('f-is-sale').checked,
+      salePrice:   salePriceRaw ? salePriceRaw : '',
       sizes,
       images,
       colors,
