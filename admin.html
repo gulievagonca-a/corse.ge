@@ -834,16 +834,29 @@
     if (file.size > 8*1024*1024) { showToast('სურათი ძალიან დიდია (მაქს. 8MB)', 'error'); return; }
     const reader = new FileReader();
     reader.onload = async ev => {
-      productImages[si] = ev.target.result;
+      productImages[si] = ev.target.result; // preview
       renderGeneralSlots();
+      showToast('⏳ ატვირთვა...', 'success');
       try {
         const res = await fetch('/api/upload', {
           method: 'POST', headers: {'Content-Type':'application/json'},
           body: JSON.stringify({filename:`${Date.now()}_${file.name}`, data: ev.target.result}),
         });
         const d = await res.json();
-        if (d.url) { productImages[si] = d.url; renderGeneralSlots(); showToast('✓ სურათი ატვირთულია','success'); }
-      } catch { showToast('ატვირთვა ვერ მოხერხდა','error'); }
+        if (d.url) {
+          productImages[si] = d.url;
+          renderGeneralSlots();
+          showToast('✓ სურათი ატვირთულია', 'success');
+        } else {
+          productImages[si] = '';
+          renderGeneralSlots();
+          showToast('❌ ატვირთვის შეცდომა: ' + (d.error || 'უცნობი'), 'error');
+        }
+      } catch(err) {
+        productImages[si] = '';
+        renderGeneralSlots();
+        showToast('❌ ატვირთვა ვერ მოხერხდა: ' + err.message, 'error');
+      }
     };
     reader.readAsDataURL(file);
   }
@@ -900,9 +913,9 @@
     const reader = new FileReader();
     reader.onload = async ev => {
       const base64 = ev.target.result;
-      // Optimistically show preview
-      colorData[ci].images[si] = base64;
+      colorData[ci].images[si] = base64; // preview
       renderColorManager();
+      showToast('⏳ ატვირთვა...', 'success');
       try {
         const res = await fetch('/api/upload', {
           method: 'POST',
@@ -914,8 +927,16 @@
           colorData[ci].images[si] = d.url;
           renderColorManager();
           showToast('✓ სურათი ატვირთულია', 'success');
+        } else {
+          colorData[ci].images[si] = '';
+          renderColorManager();
+          showToast('❌ ატვირთვის შეცდომა: ' + (d.error || 'უცნობი'), 'error');
         }
-      } catch { showToast('ატვირთვა ვერ მოხერხდა', 'error'); }
+      } catch(err) {
+        colorData[ci].images[si] = '';
+        renderColorManager();
+        showToast('❌ ატვირთვა ვერ მოხერხდა: ' + err.message, 'error');
+      }
     };
     reader.readAsDataURL(file);
   }
@@ -997,6 +1018,16 @@
 
     if (!name || !category || !description || !price) {
       showToast('გთხოვთ შეავსოთ ყველა სავალდებულო ველი (*)', 'error');
+      return;
+    }
+
+    // Block save if any image is still raw base64 (upload not finished)
+    const pendingBase64 = [
+      ...productImages,
+      ...colorData.flatMap(c => c.images)
+    ].some(img => img && img.startsWith('data:'));
+    if (pendingBase64) {
+      showToast('❌ სურათები ჯერ კიდევ იტვირთება — გთხოვთ დაელოდოთ', 'error');
       return;
     }
 
