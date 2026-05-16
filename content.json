@@ -57,17 +57,16 @@
     "description": "საქართველოს პრემიუმ სხეულის მომჭერი ბრენდი. ყოველ სხეულსა და ცხოვრების სტილზე მორგებული კოლექცია.",
     "copy": "© 2025 CORSÉ Slimming Belts. ყველა უფლება დაცულია.",
     "email": "gulievagonca@gmail.com",
-    "whatsapp": "#",
-    "instagram": "#",
-    "tiktok": "#"
+    "whatsapp": "",
+    "instagram": "",
+    "tiktok": "",
+    "facebook": ""
   },
   "nav": {
     "cta_text": "შეიძინე",
     "cta_href": "#products",
     "links": [
       {"label": "კოლექცია", "href": "#products"},
-      {"label": "როგორ მუშაობს", "href": "#how"},
-      {"label": "სარგებელი", "href": "#benefits"},
       {"label": "გამოხმაურებები", "href": "#testimonials"}
     ]
   }
