@@ -720,7 +720,7 @@
       if (!cd) return;
       cd.enabled = true;
       const imgs = Array.isArray(pc.images) ? pc.images : [];
-      cd.images = [imgs[0]||'', imgs[1]||'', imgs[2]||'', imgs[3]||''];
+      cd.images = [imgs[0],imgs[1],imgs[2],imgs[3]].map(img => (img && !img.startsWith('data:')) ? img : '');
     });
   }
 
@@ -972,9 +972,11 @@
     }
 
     renderColorManager();
-    // Load general images
+    // Load general images (strip any stale data: URLs — they can't be re-uploaded)
     if (product && Array.isArray(product.images)) {
-      product.images.forEach((img, i) => { if (i < 4) productImages[i] = img; });
+      product.images.forEach((img, i) => {
+        if (i < 4) productImages[i] = (img && !img.startsWith('data:')) ? img : '';
+      });
     }
     renderGeneralSlots();
     document.getElementById('modal-overlay').classList.add('open');
