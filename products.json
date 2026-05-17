@@ -171,6 +171,9 @@
       "price": "55",
       "icon": "✨",
       "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
       "sizes": [
         "S",
         "M",
