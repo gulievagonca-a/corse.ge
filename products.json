@@ -114,8 +114,12 @@
       "salePrice": "",
       "sizes": [
         "S/M",
+        "S/M",
         "L/XL",
         "2XL/3XL"
+      ],
+      "outOfStock": [
+        "S/M"
       ],
       "images": [
         "/uploads/1777905195276_WhatsApp Image 2026-05-04 at 17.57.43.jpeg",
