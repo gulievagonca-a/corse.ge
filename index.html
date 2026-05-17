@@ -741,10 +741,25 @@
       background: transparent; cursor: pointer;
       transition: border-color 0.18s, color 0.18s, background 0.18s;
       white-space: nowrap; user-select: none;
+      position: relative; overflow: hidden;
     }
     .size-btn:hover, .size-btn.selected {
       border-color: var(--accent); color: var(--accent);
       background: var(--accent-dim);
+    }
+    .size-btn.out-of-stock {
+      color: #C0BDB8; border-color: #E0DDD8;
+      background: transparent; cursor: not-allowed;
+      pointer-events: none;
+    }
+    .size-btn.out-of-stock::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: -4px;
+      width: calc(100% + 8px); height: 1px;
+      background: #C0BDB8;
+      transform: rotate(-18deg);
+      transform-origin: center;
     }
 
     .product-footer {
@@ -1611,8 +1626,12 @@
                   style="background:${c.hex}" data-ci="${i}" title="${c.name}"></div>`
           ).join('')}</div>` : '';
       const sortedSizes = sortSizes(Array.isArray(p.sizes) ? p.sizes : []);
+      const oosSet = new Set(Array.isArray(p.outOfStock) ? p.outOfStock : []);
       const sizesHtml = sortedSizes.length
-        ? `<div class="size-btn-row">${sortedSizes.map(s=>`<button class="size-btn" type="button">${s}</button>`).join('')}</div>` : '';
+        ? `<div class="size-btn-row">${sortedSizes.map(s=>{
+            const oos = oosSet.has(s);
+            return `<button class="size-btn${oos?' out-of-stock':''}" type="button" ${oos?'disabled':''} aria-disabled="${oos}">${s}</button>`;
+          }).join('')}</div>` : '';
       const colorsStr = JSON.stringify(colors).replace(/'/g, '&#39;');
       const defaultImgs = JSON.stringify(Array.isArray(p.images) ? p.images : []).replace(/'/g, '&#39;');
       const saleBadge = p.isSale ? '<div class="featured-badge-el" style="background:#dc2626;">SALE</div>' : '';
@@ -1758,6 +1777,7 @@
         card.querySelectorAll('.size-btn').forEach(btn => {
           btn.addEventListener('click', e => {
             e.preventDefault();
+            if (btn.classList.contains('out-of-stock')) return;
             const wasSelected = btn.classList.contains('selected');
             card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
             if (!wasSelected) btn.classList.add('selected');

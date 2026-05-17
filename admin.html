@@ -648,6 +648,28 @@
       </div>
 
       <div class="form-group">
+        <label>🚫 დამთავრებული ზომები <span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0;">(out of stock — გადაიხაზება)</span></label>
+        <div class="size-grid" id="oos-grid">
+          <div style="width:100%;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">— ერთიანი —</div>
+          <div class="size-pill"><input type="checkbox" id="oos-xs"      value="XS"     ><label for="oos-xs">XS</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-s"       value="S"      ><label for="oos-s">S</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-m"       value="M"      ><label for="oos-m">M</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-l"       value="L"      ><label for="oos-l">L</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-xl"      value="XL"     ><label for="oos-xl">XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-2xl"     value="2XL"    ><label for="oos-2xl">2XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-3xl"     value="3XL"    ><label for="oos-3xl">3XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-4xl"     value="4XL"    ><label for="oos-4xl">4XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-5xl"     value="5XL"    ><label for="oos-5xl">5XL</label></div>
+          <div style="width:100%;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;margin-bottom:2px;">— კომბინირებული —</div>
+          <div class="size-pill"><input type="checkbox" id="oos-xs-s"    value="XS/S"   ><label for="oos-xs-s">XS/S</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-s-m"     value="S/M"    ><label for="oos-s-m">S/M</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-l-xl"    value="L/XL"   ><label for="oos-l-xl">L/XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-2xl-3xl" value="2XL/3XL"><label for="oos-2xl-3xl">2XL/3XL</label></div>
+          <div class="size-pill"><input type="checkbox" id="oos-4xl-5xl" value="4XL/5XL"><label for="oos-4xl-5xl">4XL/5XL</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label>📸 პროდუქტის სურათები <span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0;">— 1-დან 4-მდე სურათი</span></label>
         <div id="general-slots"></div>
       </div>
@@ -968,6 +990,9 @@
       document.querySelectorAll('.size-pill input').forEach(el => {
         el.checked = Array.isArray(product.sizes) && product.sizes.includes(el.value);
       });
+      document.querySelectorAll('#oos-grid input[type=checkbox]').forEach(el => {
+        el.checked = Array.isArray(product.outOfStock) && product.outOfStock.includes(el.value);
+      });
       loadColorDataFrom(product.colors);
     }
 
@@ -999,6 +1024,7 @@
     });
     document.getElementById('f-featured').checked = false;
     document.querySelectorAll('.size-pill input').forEach(el => el.checked = false);
+    document.querySelectorAll('#oos-grid input[type=checkbox]').forEach(el => el.checked = false);
     colorData = freshColorData();
     renderColorManager();
     resetProductImages();
@@ -1037,6 +1063,7 @@
 
     const existingId = document.getElementById('f-id').value;
     const sizes  = sortSizes(Array.from(document.querySelectorAll('.size-pill input:checked')).map(el => el.value));
+    const outOfStock = sortSizes(Array.from(document.querySelectorAll('#oos-grid input[type=checkbox]:checked')).map(el => el.value));
     const colors = buildProductColors();
     const images = productImages.filter(i => i.trim());
 
@@ -1050,6 +1077,7 @@
       isSale:      document.getElementById('f-is-sale').checked,
       salePrice:   salePriceRaw ? salePriceRaw : '',
       sizes,
+      outOfStock,
       images,
       colors,
     };
