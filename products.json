@@ -72,6 +72,9 @@
       "price": "45",
       "icon": "✨",
       "featured": false,
+      "collection": "მამაკაცის",
+      "isSale": false,
+      "salePrice": "",
       "sizes": [
         "S",
         "M",
