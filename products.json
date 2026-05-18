@@ -266,6 +266,41 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1779146002933",
+      "name": "მაკორექტირებელი-ბოდე",
+      "category": "ბოდე",
+      "description": "უტოტო ბოდე კორსეტი",
+      "price": "45",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779145975441_1134201132_3.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "თეთრი",
+          "hex": "#FFFFFF",
+          "images": [
+            "/uploads/1779145985912_1134201132_1.jpeg",
+            "/uploads/1779145994615_1134201132_2.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
