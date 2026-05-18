@@ -228,9 +228,9 @@
     },
     {
       "id": "prod_1778836758095",
-      "name": "ბოდე",
+      "name": "მაკორექტირებელი ბოდე",
       "category": "ბოდე",
-      "description": "ბოდე",
+      "description": "უტოტო ბოდე კორსეტი",
       "price": "45",
       "icon": "✨",
       "featured": true,
@@ -246,18 +246,11 @@
         "2XL",
         "3XL"
       ],
+      "outOfStock": [],
       "images": [
-        "/uploads/1778836713176_963233465_2.jpeg",
-        "/uploads/1778836753976_55152250_4.jpeg"
+        "/uploads/1778836713176_963233465_2.jpeg"
       ],
       "colors": [
-        {
-          "name": "კრემი",
-          "hex": "#EDE0CC",
-          "images": [
-            "/uploads/1778836747326_55152250_0.jpeg"
-          ]
-        },
         {
           "name": "წითელი",
           "hex": "#C0392B",
