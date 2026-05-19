@@ -541,6 +541,44 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1779200749092",
+      "name": "შორტ-კორსეტი",
+      "category": "ბანდაჟი",
+      "description": "ულტრა მჭიდრო შორტ-კორსეტი",
+      "price": "44",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779200727502_55150958_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1779200737968_55150958_2.jpeg",
+            "/uploads/1779200744719_55150958_1.jpeg"
+          ]
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": []
+        }
+      ]
     }
   ]
 }
