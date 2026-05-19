@@ -490,6 +490,47 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1779200574328",
+      "name": "ტერმალ-ტაიტი",
+      "category": "ელასტიკი",
+      "description": "საუნა ეფექტის ელასტიკი",
+      "price": "49",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "34",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL",
+        "5XL"
+      ],
+      "outOfStock": [
+        "XL"
+      ],
+      "images": [
+        "/uploads/1779200504370_798504261_2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1779200523519_798504261_0.jpeg",
+            "/uploads/1779200532139_798503389_4.jpeg",
+            "/uploads/1779200543136_798503389_0.jpeg",
+            "/uploads/1779200553155_798503389_5.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
