@@ -878,6 +878,41 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1779358907485",
+      "name": "უნაკერო შორტ-კორსეტ მოკლე ტოტით",
+      "category": "ბანდაჟი",
+      "description": "ლაზერლი ჭრის სრულად უნაკერო შორტ-კორსეტი",
+      "price": "32",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779358749184_1077472926_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1779358863330_1077472926_2.jpeg",
+            "/uploads/1779358872096_1077472926_3.jpeg",
+            "/uploads/1779358889265_1077472926_4.jpeg",
+            "/uploads/1779358900265_1077472926_5.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
