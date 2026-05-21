@@ -844,6 +844,40 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1779358679075",
+      "name": "უნაკერო ტრუსი-კორსეტი",
+      "category": "ბანდაჟი",
+      "description": "ლაზერული ჭრის სრულად უნაკერო ტრუსი-კორსეტი",
+      "price": "28",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779358641366_153730772_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1779358659600_153730772_1.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
