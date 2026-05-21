@@ -790,6 +790,48 @@
           "images": []
         }
       ]
+    },
+    {
+      "id": "prod_1779358491922",
+      "name": "უნაკერო შორტ-კორსეტი",
+      "category": "ბანდაჟი",
+      "description": "ლაზერული ჭრის სრულად უნაკერო შორტ-კორსეტი",
+      "price": "38",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL",
+        "5XL"
+      ],
+      "outOfStock": [
+        "4XL",
+        "5XL"
+      ],
+      "images": [
+        "/uploads/1779358440665_901869249_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": [
+            "/uploads/1779358423914_901869249_3.jpeg",
+            "/uploads/1779358459100_901869249_1.jpeg",
+            "/uploads/1779358473930_901869249_4.jpeg",
+            "/uploads/1779358482983_901869249_5.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
