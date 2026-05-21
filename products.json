@@ -811,6 +811,8 @@
         "2XL",
         "3XL",
         "4XL",
+        "4XL",
+        "5XL",
         "5XL"
       ],
       "outOfStock": [
@@ -821,6 +823,16 @@
         "/uploads/1779358440665_901869249_0.jpeg"
       ],
       "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": []
+        },
         {
           "name": "ყავისფერი",
           "hex": "#6B3A2A",
