@@ -701,7 +701,7 @@
       "description": "ლაზერული ჭრის სრულად უნაკერო შორტ-კორსეტი",
       "price": "38",
       "icon": "✨",
-      "featured": false,
+      "featured": true,
       "collection": "ქალის",
       "isSale": false,
       "salePrice": "",
