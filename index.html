@@ -1285,9 +1285,17 @@
       border-bottom: 1px solid var(--border);
       padding: 10px 20px 8px;
       flex-direction: column; align-items: center; gap: 6px;
+      overflow: hidden;
+    }
+    .ann-track-wrap { width: 100%; overflow: hidden; }
+    .ann-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
     }
     .announcement-slide {
-      display: flex; align-items: center; gap: 10px;
+      min-width: 100%; display: flex; align-items: center;
+      justify-content: center; gap: 10px;
       font-size: 12px; font-weight: 600; color: var(--text);
       letter-spacing: 0.01em;
     }
@@ -1296,7 +1304,7 @@
     .ann-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: rgba(123,79,166,0.2); cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.25s, transform 0.25s;
     }
     .ann-dot.active { background: var(--accent); transform: scale(1.3); }
 
@@ -1445,16 +1453,38 @@
 
   <!-- ===== ANNOUNCEMENT SLIDER (mobile) ===== -->
   <div class="announcement-slider" id="announcement-slider">
-    <div class="announcement-slide">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-      </svg>
-      <span>მიწოდება მთელ საქართველოში</span>
+    <div class="ann-track-wrap">
+      <div class="ann-track" id="ann-track">
+        <!-- Slide 1: Truck -->
+        <div class="announcement-slide">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <span>მიწოდება მთელ საქართველოში</span>
+        </div>
+        <!-- Slide 2: Motorcycle -->
+        <div class="announcement-slide">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/>
+            <path d="M15 6h-3l-3 5H3"/><path d="M10 11l2-5h5l2 3-4 3h-5z"/>
+          </svg>
+          <span>თბილისში მიწოდება 1 სამუშაო დღეში</span>
+        </div>
+        <!-- Slide 3: Car/Cargo -->
+        <div class="announcement-slide">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-1"/>
+            <circle cx="9" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span>რეგიონებში მიწოდება 2-3 სამუშაო დღეში</span>
+        </div>
+      </div>
     </div>
-    <div class="ann-dots">
-      <span class="ann-dot active"></span>
-      <span class="ann-dot"></span>
-      <span class="ann-dot"></span>
+    <div class="ann-dots" id="ann-dots">
+      <span class="ann-dot active" data-i="0"></span>
+      <span class="ann-dot" data-i="1"></span>
+      <span class="ann-dot" data-i="2"></span>
     </div>
   </div>
 
@@ -1557,6 +1587,33 @@
   </footer>
 
   <script>
+    // Announcement carousel
+    (function() {
+      const track = document.getElementById('ann-track');
+      const dots  = document.querySelectorAll('#ann-dots .ann-dot');
+      if (!track || !dots.length) return;
+      const total = dots.length;
+      let current = 0;
+      let timer;
+
+      function goTo(i) {
+        current = (i + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+      }
+
+      function next() { goTo(current + 1); }
+
+      function start() { timer = setInterval(next, 3500); }
+      function stop()  { clearInterval(timer); }
+
+      dots.forEach(d => {
+        d.addEventListener('click', () => { stop(); goTo(+d.dataset.i); start(); });
+      });
+
+      start();
+    })();
+
     // Custom cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
