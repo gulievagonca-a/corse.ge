@@ -1162,6 +1162,82 @@
       pointer-events: none;
     }
 
+    /* ===== LOGIN MODAL ===== */
+    #login-overlay {
+      position: fixed; inset: 0; z-index: 8000;
+      background: rgba(20,16,28,0.55); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    #login-overlay.open { opacity: 1; pointer-events: all; }
+    .login-modal {
+      background: #fff; border-radius: 16px;
+      padding: 36px 32px 28px;
+      width: min(420px, 92vw);
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      transform: translateY(10px);
+      transition: transform 0.25s ease;
+    }
+    #login-overlay.open .login-modal { transform: translateY(0); }
+    .login-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none; cursor: pointer;
+      font-size: 22px; color: #888; line-height: 1;
+      padding: 4px; border-radius: 50%;
+      transition: color 0.15s, background 0.15s;
+    }
+    .login-close:hover { color: var(--text); background: #f3f3f3; }
+    .login-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 500;
+      color: var(--text); margin-bottom: 24px;
+    }
+    .login-label {
+      display: block; font-size: 12px; font-weight: 500;
+      color: var(--text); margin-bottom: 6px; letter-spacing: 0.01em;
+    }
+    .login-label .req { color: #e53e3e; margin-left: 2px; }
+    .login-input {
+      width: 100%; border: 1.5px solid #ddd; border-radius: 6px;
+      padding: 11px 14px; font-size: 14px; font-family: inherit;
+      color: var(--text); outline: none; margin-bottom: 18px;
+      transition: border-color 0.18s;
+    }
+    .login-input:focus { border-color: var(--accent); }
+    .login-remember {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text); margin-bottom: 14px;
+      cursor: pointer;
+    }
+    .login-remember input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
+    .login-forgot {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text); text-decoration: none; margin-bottom: 22px;
+    }
+    .login-forgot:hover { color: var(--accent); }
+    .login-btn {
+      width: 100%; padding: 15px;
+      background: #1a1a1a; color: #fff;
+      border: none; border-radius: 6px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      font-family: inherit; cursor: pointer;
+      transition: background 0.18s;
+    }
+    .login-btn:hover { background: var(--accent); }
+    .login-register {
+      display: block; text-align: center;
+      margin-top: 22px; font-size: 13px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      cursor: pointer;
+    }
+    .login-register:hover { color: var(--accent); }
+    .login-error {
+      font-size: 12px; color: #e53e3e;
+      margin-bottom: 12px; display: none;
+    }
+
     /* ===== LIGHTBOX ===== */
     #lb-overlay {
       position: fixed; inset: 0; z-index: 9000;
@@ -1427,7 +1503,7 @@
     <div style="display:flex; align-items:center; gap:8px;">
       <a href="#products" class="nav-cta" id="nav-cta">შეიძინე</a>
       <div class="nav-icons-mobile">
-        <button class="nav-icon-btn" aria-label="Profile">
+        <button class="nav-icon-btn" aria-label="Profile" onclick="openLoginModal()">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         </button>
         <button class="nav-icon-btn" aria-label="Favorites">
@@ -1961,7 +2037,55 @@
         nav.style.boxShadow = '0 1px 20px rgba(123,79,166,0.06)';
       }
     });
+
+    // ===== LOGIN MODAL =====
+    function openLoginModal() {
+      document.getElementById('login-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('login-email').focus();
+    }
+    function closeLoginModal() {
+      document.getElementById('login-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+      document.getElementById('login-error').style.display = 'none';
+    }
+    function handleLoginOverlayClick(e) {
+      if (e.target === document.getElementById('login-overlay')) closeLoginModal();
+    }
+    function submitLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-password').value;
+      const err   = document.getElementById('login-error');
+      err.style.display = 'none';
+      if (!email) { err.textContent = 'სახელი ან ელფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!pass)  { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
+      // Placeholder — replace with real auth endpoint
+      err.textContent = 'მომხმარებელი ვერ მოიძებნა.'; err.style.display = 'block';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLoginModal();
+    });
   </script>
+
+  <!-- ===== LOGIN MODAL ===== -->
+  <div id="login-overlay" role="dialog" aria-modal="true" aria-label="Login" onclick="handleLoginOverlayClick(event)">
+    <div class="login-modal">
+      <button class="login-close" onclick="closeLoginModal()" aria-label="დახურვა">×</button>
+      <div class="login-title">შესვლა</div>
+      <p class="login-error" id="login-error"></p>
+      <label class="login-label">სახელი, ან ელფოსტის მისამართი <span class="req">*</span></label>
+      <input class="login-input" id="login-email" type="text" autocomplete="username" />
+      <label class="login-label">პაროლი <span class="req">*</span></label>
+      <input class="login-input" id="login-password" type="password" autocomplete="current-password" />
+      <label class="login-remember">
+        <input type="checkbox" id="login-remember" />
+        დამიმახსოვრე
+      </label>
+      <a href="#" class="login-forgot">Forgot Password?</a>
+      <button class="login-btn" onclick="submitLogin()">შესვლა</button>
+      <a class="login-register">Register Now!</a>
+    </div>
+  </div>
 
   <!-- ===== LIGHTBOX ===== -->
   <div id="lb-overlay" role="dialog" aria-modal="true" aria-label="Image gallery">
