@@ -1638,7 +1638,7 @@
         </button>
         <button class="nav-icon-btn" aria-label="Cart" style="position:relative;">
           <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span class="cart-badge">0</span>
+          <span class="cart-badge" style="display:none;">0</span>
         </button>
       </div>
     </div>
@@ -2173,6 +2173,34 @@
       }
     });
 
+    // ===== CART =====
+    const CART_KEY = 'corse_cart';
+    let cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+
+    function saveCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+
+    function updateCartBadge() {
+      const badge = document.querySelector('.cart-badge');
+      const n = cart.reduce((s, i) => s + i.qty, 0);
+      if (badge) { badge.textContent = n; badge.style.display = n ? '' : 'none'; }
+    }
+
+    function addToCart(item) {
+      const existing = cart.find(i => i.id === item.id);
+      if (existing) { existing.qty += 1; }
+      else { cart.push({ id: item.id, name: item.name, price: item.price, img: item.img, icon: item.icon, qty: 1 }); }
+      saveCart();
+      updateCartBadge();
+      // Brief visual feedback on cart icon
+      const cartBtn = document.querySelector('.nav-icon-btn[aria-label="Cart"]');
+      if (cartBtn) {
+        cartBtn.style.color = 'var(--accent)';
+        setTimeout(() => cartBtn.style.color = '', 600);
+      }
+    }
+
+    updateCartBadge();
+
     // ===== WISHLIST =====
     const WISH_KEY = 'corse_wishlist';
     // wishlist: Map<id, {id,name,price,img,icon}>
@@ -2246,7 +2274,7 @@
             <div class="wish-item-name">${item.name}</div>
             <div class="wish-item-price">₾${item.price} GEL</div>
             <div class="wish-item-actions">
-              <button class="wish-action-btn primary" onclick="wishAddToCart('${item.id}')">კალათაში</button>
+              <button class="wish-action-btn primary" onclick="wishAddToCart('${item.id}')">კალათაში დამატება</button>
               <button class="wish-action-btn" onclick="wishRemove('${item.id}')">წაშლა</button>
             </div>
           </div>
@@ -2275,8 +2303,8 @@
       renderWishList();
     }
     function wishAddToCart(pid) {
-      // Placeholder — wire to cart system when ready
-      wishRemove(pid);
+      const item = wishlist.get(pid);
+      if (item) addToCart(item);
     }
 
     // Init badge on load
