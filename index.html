@@ -1238,6 +1238,32 @@
       margin-bottom: 12px; display: none;
     }
 
+    /* ===== REGISTER MODAL ===== */
+    #register-overlay {
+      position: fixed; inset: 0; z-index: 8000;
+      background: rgba(20,16,28,0.55); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    #register-overlay.open { opacity: 1; pointer-events: all; }
+    #register-overlay .login-modal { transform: translateY(10px); transition: transform 0.25s ease; }
+    #register-overlay.open .login-modal { transform: translateY(0); }
+    .reg-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 6px 0 20px; color: #ccc; font-size: 11px;
+    }
+    .reg-divider::before, .reg-divider::after {
+      content: ''; flex: 1; height: 1px; background: #eee;
+    }
+    .login-back {
+      display: block; text-align: center;
+      margin-top: 22px; font-size: 13px;
+      color: var(--text-muted); text-decoration: none; cursor: pointer;
+    }
+    .login-back strong { color: var(--text); font-weight: 700; }
+    .login-back:hover strong { color: var(--accent); }
+
     /* ===== LIGHTBOX ===== */
     #lb-overlay {
       position: fixed; inset: 0; z-index: 9000;
@@ -2042,7 +2068,7 @@
     function openLoginModal() {
       document.getElementById('login-overlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-      document.getElementById('login-email').focus();
+      setTimeout(() => document.getElementById('login-email').focus(), 50);
     }
     function closeLoginModal() {
       document.getElementById('login-overlay').classList.remove('open');
@@ -2059,11 +2085,49 @@
       err.style.display = 'none';
       if (!email) { err.textContent = 'სახელი ან ელფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
       if (!pass)  { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
-      // Placeholder — replace with real auth endpoint
       err.textContent = 'მომხმარებელი ვერ მოიძებნა.'; err.style.display = 'block';
     }
+
+    // ===== REGISTER MODAL =====
+    function openRegisterModal() {
+      document.getElementById('register-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('reg-name').focus(), 50);
+    }
+    function closeRegisterModal() {
+      document.getElementById('register-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+      document.getElementById('reg-error').style.display = 'none';
+    }
+    function handleRegisterOverlayClick(e) {
+      if (e.target === document.getElementById('register-overlay')) closeRegisterModal();
+    }
+    function switchToRegister() {
+      closeLoginModal();
+      openRegisterModal();
+    }
+    function switchToLogin() {
+      closeRegisterModal();
+      openLoginModal();
+    }
+    function submitRegister() {
+      const name  = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const pass  = document.getElementById('reg-password').value;
+      const pass2 = document.getElementById('reg-password2').value;
+      const err   = document.getElementById('reg-error');
+      err.style.display = 'none';
+      if (!name)  { err.textContent = 'სახელი და გვარი სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!email) { err.textContent = 'ელ. ფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!pass)  { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (pass !== pass2) { err.textContent = 'პაროლები არ ემთხვევა.'; err.style.display = 'block'; return; }
+      if (pass.length < 6) { err.textContent = 'პაროლი მინიმუმ 6 სიმბოლო უნდა იყოს.'; err.style.display = 'block'; return; }
+      // Placeholder — replace with real auth endpoint
+      err.textContent = 'რეგისტრაცია ვერ მოხერხდა. სცადეთ მოგვიანებით.'; err.style.display = 'block';
+    }
+
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLoginModal();
+      if (e.key === 'Escape') { closeLoginModal(); closeRegisterModal(); }
     });
   </script>
 
@@ -2083,7 +2147,26 @@
       </label>
       <a href="#" class="login-forgot">Forgot Password?</a>
       <button class="login-btn" onclick="submitLogin()">შესვლა</button>
-      <a class="login-register">Register Now!</a>
+      <a class="login-register" onclick="switchToRegister()">Register Now!</a>
+    </div>
+  </div>
+
+  <!-- ===== REGISTER MODAL ===== -->
+  <div id="register-overlay" role="dialog" aria-modal="true" aria-label="Register" onclick="handleRegisterOverlayClick(event)">
+    <div class="login-modal">
+      <button class="login-close" onclick="closeRegisterModal()" aria-label="დახურვა">×</button>
+      <div class="login-title">რეგისტრაცია</div>
+      <p class="login-error" id="reg-error"></p>
+      <label class="login-label">სახელი და გვარი <span class="req">*</span></label>
+      <input class="login-input" id="reg-name" type="text" autocomplete="name" />
+      <label class="login-label">ელ. ფოსტის მისამართი <span class="req">*</span></label>
+      <input class="login-input" id="reg-email" type="email" autocomplete="email" />
+      <label class="login-label">პაროლი <span class="req">*</span></label>
+      <input class="login-input" id="reg-password" type="password" autocomplete="new-password" />
+      <label class="login-label">გაიმეორეთ პაროლი <span class="req">*</span></label>
+      <input class="login-input" id="reg-password2" type="password" autocomplete="new-password" style="margin-bottom:22px;" />
+      <button class="login-btn" onclick="submitRegister()">რეგისტრაცია</button>
+      <a class="login-back" onclick="switchToLogin()">უკვე გაქვთ ანგარიში? <strong>შესვლა</strong></a>
     </div>
   </div>
 
