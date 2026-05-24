@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg:           #F9F9F7;
@@ -2064,6 +2065,29 @@
       }
     });
 
+    // ===== SUPABASE AUTH =====
+    const SUPABASE_URL  = 'YOUR_SUPABASE_URL';   // ← შეცვალე
+    const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY'; // ← შეცვალე
+    const _sb = (typeof supabase !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL')
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON)
+      : null;
+
+    // Sync profile icon UI to auth state
+    function updateAuthUI(user) {
+      const btn = document.querySelector('.nav-icon-btn[aria-label="Profile"]');
+      if (!btn) return;
+      if (user) {
+        btn.title = user.email;
+        btn.style.color = 'var(--accent)';
+      } else {
+        btn.title = ''; btn.style.color = '';
+      }
+    }
+    if (_sb) {
+      _sb.auth.getSession().then(({ data }) => updateAuthUI(data?.session?.user ?? null));
+      _sb.auth.onAuthStateChange((_, session) => updateAuthUI(session?.user ?? null));
+    }
+
     // ===== LOGIN MODAL =====
     function openLoginModal() {
       document.getElementById('login-overlay').classList.add('open');
@@ -2078,14 +2102,24 @@
     function handleLoginOverlayClick(e) {
       if (e.target === document.getElementById('login-overlay')) closeLoginModal();
     }
-    function submitLogin() {
+    async function submitLogin() {
       const email = document.getElementById('login-email').value.trim();
       const pass  = document.getElementById('login-password').value;
       const err   = document.getElementById('login-error');
+      const btn   = document.querySelector('#login-overlay .login-btn');
       err.style.display = 'none';
-      if (!email) { err.textContent = 'სახელი ან ელფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!email) { err.textContent = 'ელ. ფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
       if (!pass)  { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
-      err.textContent = 'მომხმარებელი ვერ მოიძებნა.'; err.style.display = 'block';
+      if (!_sb)   { err.textContent = 'Auth სერვისი არ არის კონფიგურირებული.'; err.style.display = 'block'; return; }
+      btn.disabled = true; btn.textContent = '...';
+      const { error } = await _sb.auth.signInWithPassword({ email, password: pass });
+      btn.disabled = false; btn.textContent = 'შესვლა';
+      if (error) {
+        const msg = error.message.includes('Invalid') ? 'ელ. ფოსტა ან პაროლი არასწორია.' : error.message;
+        err.textContent = msg; err.style.display = 'block';
+      } else {
+        closeLoginModal();
+      }
     }
 
     // ===== REGISTER MODAL =====
@@ -2102,28 +2136,41 @@
     function handleRegisterOverlayClick(e) {
       if (e.target === document.getElementById('register-overlay')) closeRegisterModal();
     }
-    function switchToRegister() {
-      closeLoginModal();
-      openRegisterModal();
-    }
-    function switchToLogin() {
-      closeRegisterModal();
-      openLoginModal();
-    }
-    function submitRegister() {
+    function switchToRegister() { closeLoginModal(); openRegisterModal(); }
+    function switchToLogin()    { closeRegisterModal(); openLoginModal(); }
+
+    async function submitRegister() {
       const name  = document.getElementById('reg-name').value.trim();
       const email = document.getElementById('reg-email').value.trim();
       const pass  = document.getElementById('reg-password').value;
       const pass2 = document.getElementById('reg-password2').value;
       const err   = document.getElementById('reg-error');
+      const btn   = document.querySelector('#register-overlay .login-btn');
       err.style.display = 'none';
-      if (!name)  { err.textContent = 'სახელი და გვარი სავალდებულოა.'; err.style.display = 'block'; return; }
-      if (!email) { err.textContent = 'ელ. ფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
-      if (!pass)  { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
-      if (pass !== pass2) { err.textContent = 'პაროლები არ ემთხვევა.'; err.style.display = 'block'; return; }
+      if (!name)           { err.textContent = 'სახელი და გვარი სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!email)          { err.textContent = 'ელ. ფოსტა სავალდებულოა.'; err.style.display = 'block'; return; }
+      if (!pass)           { err.textContent = 'პაროლი სავალდებულოა.'; err.style.display = 'block'; return; }
       if (pass.length < 6) { err.textContent = 'პაროლი მინიმუმ 6 სიმბოლო უნდა იყოს.'; err.style.display = 'block'; return; }
-      // Placeholder — replace with real auth endpoint
-      err.textContent = 'რეგისტრაცია ვერ მოხერხდა. სცადეთ მოგვიანებით.'; err.style.display = 'block';
+      if (pass !== pass2)  { err.textContent = 'პაროლები არ ემთხვევა.'; err.style.display = 'block'; return; }
+      if (!_sb)            { err.textContent = 'Auth სერვისი არ არის კონფიგურირებული.'; err.style.display = 'block'; return; }
+      btn.disabled = true; btn.textContent = '...';
+      const { error } = await _sb.auth.signUp({
+        email, password: pass,
+        options: { data: { full_name: name } }
+      });
+      btn.disabled = false; btn.textContent = 'რეგისტრაცია';
+      if (error) {
+        const msg = error.message.includes('already registered')
+          ? 'ეს ელ. ფოსტა უკვე რეგისტრირებულია. სცადეთ შესვლა.'
+          : error.message;
+        err.textContent = msg; err.style.display = 'block';
+      } else {
+        closeRegisterModal();
+        // Show confirmation or auto-login depending on Supabase email confirmation setting
+        openLoginModal();
+        document.getElementById('login-error').style.cssText = 'display:block;color:#2e7d32;';
+        document.getElementById('login-error').textContent = '✓ რეგისტრაცია წარმატებული! შეამოწმეთ ელ. ფოსტა.';
+      }
     }
 
     document.addEventListener('keydown', e => {
