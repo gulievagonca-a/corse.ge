@@ -1052,28 +1052,31 @@
       margin-bottom: 48px;
     }
     .footer-brand p {
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.9;
       color: var(--text-muted);
       margin-top: 16px;
       max-width: 260px;
     }
     .footer-col-title {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-transform: none;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 14px;
+      display: block;
     }
     .footer-links {
       list-style: none;
+      padding: 0; margin: 0;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+    .footer-links li { font-size: 14px; line-height: 1.5; }
     .footer-links a {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s ease;
@@ -1095,7 +1098,7 @@
     }
     .footer-social {
       display: flex;
-      gap: 20px;
+      gap: 15px;
     }
     .social-link {
       width: 36px; height: 36px;
@@ -1532,7 +1535,16 @@
       .testimonials-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .step-connector { display: none; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      footer { padding: 40px 20px; }
+      .footer-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        margin-bottom: 32px;
+      }
+      .footer-grid > div { width: 100%; }
+      .footer-brand p { max-width: 100%; }
       .footer-bottom { flex-direction: column; gap: 20px; }
     }
 
