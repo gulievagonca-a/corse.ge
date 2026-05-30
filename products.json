@@ -951,6 +951,39 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1780135195847",
+      "name": "bode",
+      "category": "bode",
+      "description": "bode",
+      "price": "45",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780135131622_WhatsApp_Image_2026-05-26_at_18.58.11-2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780135147625_WhatsApp_Image_2026-05-26_at_18.58.11-3.jpeg",
+            "/uploads/1780135153773_WhatsApp_Image_2026-05-26_at_18.58.11-4.jpeg",
+            "/uploads/1780135161255_WhatsApp_Image_2026-05-26_at_18.58.11-5.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
