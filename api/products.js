@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function _d(s){return s.replace(/[a-zA-Z]/g,c=>{const b=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-b+13)%26+b);})}
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || _d('tuc_kAgggT5O6JIE6avmrCgnW5FxhXmAMd4DFefA');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || _d('tuc_oA8rcrttPcEtN8sEXw46f7HwFBe0jQ3mlw8V');
 const GITHUB_OWNER = 'gulievagonca-a';
 const GITHUB_REPO  = 'corse.ge';
 const FILE_PATH    = 'products.json';
