@@ -1038,8 +1038,21 @@
         "2XL"
       ],
       "outOfStock": [],
-      "images": [],
-      "colors": []
+      "images": [
+        "/uploads/1780485810846_WhatsApp_Image_2026-06-03_at_15.18.08-5.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780485918199_WhatsApp_Image_2026-06-03_at_15.18.08.jpeg",
+            "/uploads/1780485925666_WhatsApp_Image_2026-06-03_at_15.18.08-4.jpeg",
+            "/uploads/1780485932960_WhatsApp_Image_2026-06-03_at_15.18.08-2.jpeg",
+            "/uploads/1780485941618_WhatsApp_Image_2026-06-03_at_15.18.09-2.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
