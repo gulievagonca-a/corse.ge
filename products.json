@@ -1087,6 +1087,44 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1780488326850",
+      "name": "ტრუსი კორსეტი",
+      "category": "ტრუსი",
+      "description": "მაღალწელიანი ტრუსი კორსეტი",
+      "price": "24",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": true,
+      "salePrice": "18",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL",
+        "5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780488272063_865473300_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1780488277078_865473300_1.jpeg",
+            "/uploads/1780488280532_865473300_2.jpeg",
+            "/uploads/1780488284397_865473300_3.jpeg",
+            "/uploads/1780488287795_865473300_4.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
