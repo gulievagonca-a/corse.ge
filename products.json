@@ -1018,6 +1018,28 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1780485786541",
+      "name": "bode",
+      "category": "bode",
+      "description": "Sculpt Seamless Strong Compression Zip Front Brief Bodysuit - Black",
+      "price": "55",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [],
+      "colors": []
     }
   ]
 }
