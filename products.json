@@ -1125,6 +1125,41 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1780745493785",
+      "name": "ბანდაჟი",
+      "category": "ბანდაჟი",
+      "description": "კავიანი' ტოტებიანი მაკორექტირებელი კორსეტი",
+      "price": "35",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780745468096_1124121300_1.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780745475990_1124121300_2.jpeg",
+            "/uploads/1780745482694_1124121300_4.jpeg",
+            "/uploads/1780745487595_1124121300_5.jpeg",
+            "/uploads/1780745491673_1124121300_0.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
