@@ -1195,6 +1195,46 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1781116881047",
+      "name": "სლიკონის ბიუსტჰალტერი",
+      "category": "ბიუსტჰალტერი",
+      "description": "მკერდის ამწევი სლიკონი",
+      "price": "16",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781116737359_763654566_2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1781116761060_763654566_0.jpeg",
+            "/uploads/1781116779190_763654566_1.jpeg",
+            "/uploads/1781116786080_763654566_3.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
