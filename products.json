@@ -1270,6 +1270,37 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1781117278947",
+      "name": "სლიკონის ბიუსტჰალტერი შესაკრავით",
+      "category": "ბიუსტჰალტერი",
+      "description": "რეგულირებადი 'push-up' ეფექტი",
+      "price": "18",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781117262904_46428958_1.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1781117271334_46428958_3.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
