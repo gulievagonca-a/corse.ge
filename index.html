@@ -1949,34 +1949,34 @@
         const colors = JSON.parse(card.dataset.colors || '[]');
         const defaultImages = JSON.parse(card.dataset.images || '[]');
         const icon = card.dataset.icon || '✨';
-        let activeColor = -1; // -1 = show default images
         let activeSlide = 0;
 
-        function imgs() {
-          if (activeColor >= 0) {
-            const c = colors[activeColor];
-            const ci = c && Array.isArray(c.images) && c.images.length ? c.images : [];
-            // Prepend the main default image if it exists and isn't already in color images
-            if (ci.length && defaultImages.length) {
-              const main = defaultImages[0];
-              return ci.includes(main) ? ci : [main, ...ci];
-            }
-            if (ci.length) return ci;
+        // Collect ALL images in upload order: general first, then each color in order
+        function allImgs() {
+          const seen = new Set();
+          const result = [];
+          for (const url of defaultImages) {
+            if (url && !seen.has(url)) { seen.add(url); result.push(url); }
           }
-          return defaultImages.length ? defaultImages : [];
+          for (const c of colors) {
+            for (const url of (c.images || [])) {
+              if (url && !seen.has(url)) { seen.add(url); result.push(url); }
+            }
+          }
+          return result;
         }
 
         function buildGallery() {
           const gallery = card.querySelector('.product-gallery');
-          const images = imgs();
+          const images = allImgs();
           gallery.innerHTML = '';
           gallery.onclick = null;
 
           if (images.length) {
-            const src = images[activeSlide] || images[0];
+            if (activeSlide >= images.length) activeSlide = 0;
             const img = document.createElement('img');
             img.className = 'gallery-main-img' + (images.length > 1 ? ' gallery-clickable' : '');
-            img.src = src;
+            img.src = images[activeSlide];
             img.loading = 'lazy';
             img.alt = '';
             gallery.appendChild(img);
@@ -1986,7 +1986,6 @@
               badge.className = 'gallery-count-badge';
               badge.textContent = (activeSlide + 1) + '/' + images.length;
               gallery.appendChild(badge);
-
               gallery.onclick = () => {
                 if (typeof openLightbox === 'function') openLightbox(images, activeSlide);
               };
@@ -1999,28 +1998,17 @@
           }
         }
 
+        // Swatch clicks only highlight — don't change image order
         card.querySelectorAll('.card-swatch').forEach((sw, i) => {
           sw.addEventListener('click', e => {
             e.preventDefault();
-            activeColor = i; activeSlide = 0;
             card.querySelectorAll('.card-swatch').forEach((s, j) => s.classList.toggle('active', j === i));
-            buildGallery();
           });
         });
 
-        // Init: show default images first; only auto-select color when no default images exist
-        activeColor = -1;
-        if (!defaultImages.length && colors.length > 0) {
-          const firstWithImages = colors.findIndex(c => Array.isArray(c.images) && c.images.length);
-          if (firstWithImages >= 0) {
-            activeColor = firstWithImages;
-            card.querySelectorAll('.card-swatch').forEach((s, j) => s.classList.toggle('active', j === firstWithImages));
-          }
-        }
-
         buildGallery();
 
-        // Mobile swipe between images
+        // Mobile swipe
         const galleryEl = card.querySelector('.product-gallery');
         let swipeStartX = 0;
         galleryEl.addEventListener('touchstart', e => {
@@ -2028,7 +2016,7 @@
         }, { passive: true });
         galleryEl.addEventListener('touchend', e => {
           const dx = e.changedTouches[0].clientX - swipeStartX;
-          const images = imgs();
+          const images = allImgs();
           if (Math.abs(dx) > 35 && images.length > 1) {
             activeSlide = dx < 0
               ? (activeSlide + 1) % images.length
