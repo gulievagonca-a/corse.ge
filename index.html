@@ -1956,6 +1956,11 @@
           if (activeColor >= 0) {
             const c = colors[activeColor];
             const ci = c && Array.isArray(c.images) && c.images.length ? c.images : [];
+            // Prepend the main default image if it exists and isn't already in color images
+            if (ci.length && defaultImages.length) {
+              const main = defaultImages[0];
+              return ci.includes(main) ? ci : [main, ...ci];
+            }
             if (ci.length) return ci;
           }
           return defaultImages.length ? defaultImages : [];
@@ -2003,9 +2008,9 @@
           });
         });
 
-        // Init: prefer color images when available, fall back to default images
+        // Init: show default images first; only auto-select color when no default images exist
         activeColor = -1;
-        if (colors.length > 0) {
+        if (!defaultImages.length && colors.length > 0) {
           const firstWithImages = colors.findIndex(c => Array.isArray(c.images) && c.images.length);
           if (firstWithImages >= 0) {
             activeColor = firstWithImages;
