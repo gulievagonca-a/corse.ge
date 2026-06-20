@@ -2003,9 +2003,9 @@
           });
         });
 
-        // Init: prefer default images; fall back to first color that has images
+        // Init: prefer color images when available, fall back to default images
         activeColor = -1;
-        if (!defaultImages.length && colors.length > 0) {
+        if (colors.length > 0) {
           const firstWithImages = colors.findIndex(c => Array.isArray(c.images) && c.images.length);
           if (firstWithImages >= 0) {
             activeColor = firstWithImages;
@@ -2014,6 +2014,23 @@
         }
 
         buildGallery();
+
+        // Mobile swipe between images
+        const galleryEl = card.querySelector('.product-gallery');
+        let swipeStartX = 0;
+        galleryEl.addEventListener('touchstart', e => {
+          swipeStartX = e.touches[0].clientX;
+        }, { passive: true });
+        galleryEl.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - swipeStartX;
+          const images = imgs();
+          if (Math.abs(dx) > 35 && images.length > 1) {
+            activeSlide = dx < 0
+              ? (activeSlide + 1) % images.length
+              : (activeSlide - 1 + images.length) % images.length;
+            buildGallery();
+          }
+        }, { passive: true });
 
         // Size button toggle
         card.querySelectorAll('.size-btn').forEach(btn => {
