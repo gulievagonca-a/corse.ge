@@ -1475,6 +1475,41 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1782663509151",
+      "name": "მსხვილი ბრეტელიანი ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "48",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS/S",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1782663446166_WhatsApp_Image_2026-06-28_at_20.12.45-3.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": [
+            "/uploads/1782663458965_WhatsApp_Image_2026-06-28_at_20.12.45-5.jpeg",
+            "/uploads/1782663466474_WhatsApp_Image_2026-06-28_at_20.12.46.jpeg",
+            "/uploads/1782663498027_WhatsApp_Image_2026-06-28_at_20.12.46-2.jpeg",
+            "/uploads/1782663505754_WhatsApp_Image_2026-06-28_at_20.12.45-4.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
