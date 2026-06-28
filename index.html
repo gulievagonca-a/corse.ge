@@ -1840,7 +1840,7 @@
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     // Render products from JSON
-    const SIZE_ORDER = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','XS/S','S/M','L/XL','2XL/3XL','4XL/5XL'];
+    const SIZE_ORDER = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','XXS/XS','S/M','L/XL','2XL/3XL','4XL/5XL'];
     function sizeRank(s) {
       const idx = SIZE_ORDER.indexOf(s);
       if (idx >= 0) return idx;
