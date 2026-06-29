@@ -1529,7 +1529,16 @@
       .nav-icons-mobile { display: flex; }
       .nav-search-wrap { display: block; top: calc(29px + 53px); }
       .announcement-slider { display: flex; top: calc(29px + 53px + 55px); }
-      .hero { padding-top: calc(29px + 53px + 55px + 62px + 60px); }
+      .hero {
+        min-height: 0;
+        padding-top: calc(29px + 53px + 55px + 24px);
+        padding-bottom: 28px;
+      }
+      .hero-eyebrow { margin-bottom: 18px; }
+      .hero-logo-block { margin-bottom: 4px; }
+      .hero-logo-name { font-size: 42px; }
+      .hero-tagline { margin-top: 16px; font-size: 22px; }
+      .hero-scroll { display: none; }
       .section-inner { padding: 72px 24px; }
       .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 24px; gap: 16px; }
       .stat-item + .stat-item::before { display: none; }
