@@ -141,6 +141,43 @@
       ]
     },
     {
+      "id": "prod_1779146224178",
+      "name": "მაკორექტირებელი ბოდე",
+      "category": "ბოდე",
+      "description": "უტოტო ბოდე-კორსეტი",
+      "price": "45",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779146188874_55152250_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1779146202790_55152250_1.jpeg",
+            "/uploads/1779146208344_55152250_3.jpeg",
+            "/uploads/1779146212493_55152250_4.jpeg",
+            "/uploads/1779146217402_55152250_2.jpeg"
+          ]
+        }
+      ]
+    },
+    {
       "id": "prod_1777841826282",
       "name": "ტაიტ-კორსეტი",
       "category": "ელასტიკი",
@@ -235,43 +272,6 @@
           "name": "კრემი",
           "hex": "#EDE0CC",
           "images": []
-        }
-      ]
-    },
-    {
-      "id": "prod_1779146224178",
-      "name": "მაკორექტირებელი ბოდე",
-      "category": "ბოდე",
-      "description": "უტოტო ბოდე-კორსეტი",
-      "price": "45",
-      "icon": "✨",
-      "featured": false,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1779146188874_55152250_0.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "კრემი",
-          "hex": "#EDE0CC",
-          "images": [
-            "/uploads/1779146202790_55152250_1.jpeg",
-            "/uploads/1779146208344_55152250_3.jpeg",
-            "/uploads/1779146212493_55152250_4.jpeg",
-            "/uploads/1779146217402_55152250_2.jpeg"
-          ]
         }
       ]
     },
