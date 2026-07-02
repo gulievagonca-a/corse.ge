@@ -276,6 +276,49 @@
       ]
     },
     {
+      "id": "prod_1779199632580",
+      "name": "ტოტიანი-ბოდე",
+      "category": "ბოდე",
+      "description": "სრული სიგრძის ბოდე",
+      "price": "55",
+      "icon": "✨",
+      "featured": true,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779199595539_62282784_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1779199610725_62282784_1.jpeg",
+            "/uploads/1779199617070_62282784_3.jpeg"
+          ]
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": []
+        },
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": []
+        }
+      ]
+    },
+    {
       "id": "prod_1777905436999",
       "name": "მაღალწელიანი კორსეტი-ტრუსი",
       "category": "ბანდაჟი",
@@ -365,49 +408,6 @@
         {
           "name": "კრემი",
           "hex": "#EDE0CC",
-          "images": []
-        }
-      ]
-    },
-    {
-      "id": "prod_1779199632580",
-      "name": "ტოტიანი-ბოდე",
-      "category": "ბოდე",
-      "description": "სრული სიგრძის ბოდე",
-      "price": "55",
-      "icon": "✨",
-      "featured": true,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1779199595539_62282784_0.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "შავი",
-          "hex": "#1C1C1C",
-          "images": [
-            "/uploads/1779199610725_62282784_1.jpeg",
-            "/uploads/1779199617070_62282784_3.jpeg"
-          ]
-        },
-        {
-          "name": "კრემი",
-          "hex": "#EDE0CC",
-          "images": []
-        },
-        {
-          "name": "ყავისფერი",
-          "hex": "#6B3A2A",
           "images": []
         }
       ]
