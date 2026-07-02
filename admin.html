@@ -95,6 +95,18 @@
     }
     .product-card:hover { border-color: var(--border-bright); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(123,79,166,0.12); }
     .product-card.featured { border-color: rgba(123,79,166,0.28); }
+    .product-card.dragging { opacity: 0.35; transform: scale(0.97); }
+    .product-card.drag-over { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(123,79,166,0.3); transform: translateY(-2px); }
+    .drag-handle {
+      position: absolute; top: 10px; left: 10px; z-index: 10;
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,0.88); backdrop-filter: blur(4px);
+      border: 1px solid rgba(123,79,166,0.15);
+      display: flex; align-items: center; justify-content: center;
+      cursor: grab; color: var(--text-muted);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .product-card:hover .drag-handle { opacity: 1; }
     .featured-badge {
       position: absolute; top: 14px; right: 14px; z-index: 5;
       background: var(--accent); color: #fff;
@@ -802,7 +814,14 @@
       const sizeTags = (p.sizes||[]).map(s => `<span class="size-tag">${s}</span>`).join('');
 
       return `
-        <div class="product-card ${p.featured?'featured':''}">
+        <div class="product-card ${p.featured?'featured':''}" draggable="true" data-id="${p.id}">
+          <div class="drag-handle" title="სიის შეცვლა">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+              <circle cx="4" cy="2" r="1.2"/><circle cx="8" cy="2" r="1.2"/>
+              <circle cx="4" cy="6" r="1.2"/><circle cx="8" cy="6" r="1.2"/>
+              <circle cx="4" cy="10" r="1.2"/><circle cx="8" cy="10" r="1.2"/>
+            </svg>
+          </div>
           ${p.featured ? '<span class="featured-badge">ყველაზე პოპულარული</span>' : ''}
           <div class="card-gallery">${imgHtml}</div>
           ${swatchDots ? `<div class="card-swatches">${swatchDots}</div>` : ''}
@@ -1137,6 +1156,52 @@
   });
 
   loadProducts();
+
+  /* ===== DRAG-TO-REORDER ===== */
+  let dragSrcId = null;
+  (function initDrag() {
+    const grid = document.getElementById('products-grid');
+
+    grid.addEventListener('dragstart', e => {
+      const card = e.target.closest('.product-card[data-id]');
+      if (!card) return;
+      dragSrcId = card.dataset.id;
+      setTimeout(() => card.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    grid.addEventListener('dragend', () => {
+      document.querySelectorAll('#products-grid .product-card').forEach(c => c.classList.remove('dragging', 'drag-over'));
+    });
+
+    grid.addEventListener('dragover', e => {
+      e.preventDefault();
+      const card = e.target.closest('.product-card[data-id]');
+      if (!card || card.dataset.id === dragSrcId) return;
+      document.querySelectorAll('#products-grid .product-card').forEach(c => c.classList.remove('drag-over'));
+      card.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    grid.addEventListener('dragleave', e => {
+      if (!e.relatedTarget || !e.relatedTarget.closest('.product-card')) {
+        document.querySelectorAll('#products-grid .product-card').forEach(c => c.classList.remove('drag-over'));
+      }
+    });
+
+    grid.addEventListener('drop', e => {
+      e.preventDefault();
+      const card = e.target.closest('.product-card[data-id]');
+      if (!card || !dragSrcId || card.dataset.id === dragSrcId) return;
+      const srcIdx = products.findIndex(p => p.id === dragSrcId);
+      const tgtIdx = products.findIndex(p => p.id === card.dataset.id);
+      if (srcIdx === -1 || tgtIdx === -1) return;
+      const [moved] = products.splice(srcIdx, 1);
+      products.splice(tgtIdx, 0, moved);
+      renderGrid();
+      saveToServer();
+    });
+  })();
 
   /* ===== TAB SWITCHING ===== */
   function switchTab(tab) {
