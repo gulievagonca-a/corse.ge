@@ -35,6 +35,40 @@
       ]
     },
     {
+      "id": "prod_1778836758095",
+      "name": "მაკორექტირებელი ბოდე",
+      "category": "ბოდე",
+      "description": "უტოტო ბოდე კორსეტი",
+      "price": "45",
+      "icon": "✨",
+      "featured": true,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1778836713176_963233465_2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": [
+            "/uploads/1778836730706_963233465_3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
       "id": "prod_1777841826282",
       "name": "ტაიტ-კორსეტი",
       "category": "ელასტიკი",
@@ -129,40 +163,6 @@
           "name": "კრემი",
           "hex": "#EDE0CC",
           "images": []
-        }
-      ]
-    },
-    {
-      "id": "prod_1778836758095",
-      "name": "მაკორექტირებელი ბოდე",
-      "category": "ბოდე",
-      "description": "უტოტო ბოდე კორსეტი",
-      "price": "45",
-      "icon": "✨",
-      "featured": true,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1778836713176_963233465_2.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "წითელი",
-          "hex": "#C0392B",
-          "images": [
-            "/uploads/1778836730706_963233465_3.jpeg"
-          ]
         }
       ]
     },
