@@ -136,6 +136,43 @@
       ]
     },
     {
+      "id": "prod_1779146360493",
+      "name": "მაკორექტირებელი ბოდე",
+      "category": "ბოდე",
+      "description": "უტოტო ბოდე-კორსეტი",
+      "price": "45",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1779146312892_932346106_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": [
+            "/uploads/1779146320624_932346106_1.jpeg",
+            "/uploads/1779146332388_932346106_3.jpeg",
+            "/uploads/1779146344272_932346106_4.jpeg",
+            "/uploads/1779146352424_932346106_5.jpeg"
+          ]
+        }
+      ]
+    },
+    {
       "id": "prod_1777905436999",
       "name": "მაღალწელიანი კორსეტი-ტრუსი",
       "category": "ბანდაჟი",
@@ -226,43 +263,6 @@
           "name": "კრემი",
           "hex": "#EDE0CC",
           "images": []
-        }
-      ]
-    },
-    {
-      "id": "prod_1779146360493",
-      "name": "მაკორექტირებელი ბოდე",
-      "category": "ბოდე",
-      "description": "უტოტო ბოდე-კორსეტი",
-      "price": "45",
-      "icon": "✨",
-      "featured": false,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "XL",
-        "2XL",
-        "3XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1779146312892_932346106_0.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "ყავისფერი",
-          "hex": "#6B3A2A",
-          "images": [
-            "/uploads/1779146320624_932346106_1.jpeg",
-            "/uploads/1779146332388_932346106_3.jpeg",
-            "/uploads/1779146344272_932346106_4.jpeg",
-            "/uploads/1779146352424_932346106_5.jpeg"
-          ]
         }
       ]
     },
