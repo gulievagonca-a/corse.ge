@@ -1482,40 +1482,6 @@
       ]
     },
     {
-      "id": "prod_1781695645989",
-      "name": "უბრეტელო უტოტო ბოდე",
-      "category": "ბოდე",
-      "description": "strapless",
-      "price": "54",
-      "icon": "✨",
-      "featured": false,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "XXS/XS",
-        "S/M",
-        "L/XL",
-        "2XL/3XL",
-        "4XL/5XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1781695618934_WhatsApp_Image_2026-06-17_at_14.41.14.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "შავი",
-          "hex": "#1C1C1C",
-          "images": [
-            "/uploads/1781695631401_WhatsApp_Image_2026-06-17_at_14.41.14-2.jpeg",
-            "/uploads/1781695639368_WhatsApp_Image_2026-06-17_at_14.41.14-3.jpeg",
-            "/uploads/1781695643485_WhatsApp_Image_2026-06-17_at_14.41.14-4.jpeg"
-          ]
-        }
-      ]
-    },
-    {
       "id": "prod_1782663509151",
       "name": "მსხვილი ბრეტელიანი ბოდე",
       "category": "ბოდე",
@@ -1551,6 +1517,40 @@
             "/uploads/1782663466474_WhatsApp_Image_2026-06-28_at_20.12.46.jpeg",
             "/uploads/1782663498027_WhatsApp_Image_2026-06-28_at_20.12.46-2.jpeg",
             "/uploads/1782663505754_WhatsApp_Image_2026-06-28_at_20.12.45-4.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781695645989",
+      "name": "უბრეტელო უტოტო ბოდე",
+      "category": "ბოდე",
+      "description": "strapless",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XXS/XS",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781695618934_WhatsApp_Image_2026-06-17_at_14.41.14.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781695631401_WhatsApp_Image_2026-06-17_at_14.41.14-2.jpeg",
+            "/uploads/1781695639368_WhatsApp_Image_2026-06-17_at_14.41.14-3.jpeg",
+            "/uploads/1781695643485_WhatsApp_Image_2026-06-17_at_14.41.14-4.jpeg"
           ]
         }
       ]
