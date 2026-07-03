@@ -192,12 +192,32 @@
       ],
       "colors": [
         {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": []
+        },
+        {
           "name": "თეთრი",
           "hex": "#FFFFFF",
           "images": [
             "/uploads/1779145985912_1134201132_1.jpeg",
             "/uploads/1779145994615_1134201132_2.jpeg"
           ]
+        },
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": []
+        },
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": []
         }
       ]
     },
