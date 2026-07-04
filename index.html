@@ -1202,13 +1202,58 @@
       transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
     }
     #wish-drawer.open { transform: translateX(0); }
-    #wish-backdrop {
+    #wish-backdrop, #cart-backdrop {
       position: fixed; inset: 0; z-index: 8400;
       background: rgba(20,16,28,0.4); backdrop-filter: blur(2px);
       opacity: 0; pointer-events: none;
       transition: opacity 0.28s;
     }
-    #wish-backdrop.open { opacity: 1; pointer-events: all; }
+    #wish-backdrop.open, #cart-backdrop.open { opacity: 1; pointer-events: all; }
+    /* CART DRAWER */
+    #cart-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 8500;
+      width: min(420px, 100vw); background: #fff;
+      box-shadow: -4px 0 40px rgba(0,0,0,0.13);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+    }
+    #cart-drawer.open { transform: translateX(0); }
+    .cart-drawer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .cart-drawer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cart-count-label { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; }
+    .cart-close-btn { background: none; border: none; cursor: pointer; font-size: 22px; color: #888; padding: 4px 8px; border-radius: 4px; transition: color 0.15s, background 0.15s; line-height: 1; }
+    .cart-close-btn:hover { color: var(--text); background: #f3f3f3; }
+    .cart-list { flex: 1; overflow-y: auto; padding: 16px 24px; }
+    .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; color: var(--text-muted); font-size: 13px; text-align: center; }
+    .cart-empty svg { width: 48px; height: 48px; stroke: #ddd; fill: none; stroke-width: 1.2; }
+    .cart-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img { width: 80px; height: 96px; border-radius: 8px; background: var(--bg-alt); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
+    .cart-item-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item-price { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 10px; }
+    .cart-item-actions { display: flex; align-items: center; gap: 8px; }
+    .cart-qty-btn { width: 28px; height: 28px; border-radius: 8px; background: var(--bg-alt); border: 1px solid var(--border); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: var(--text); transition: background 0.15s; }
+    .cart-qty-btn:hover { background: rgba(123,79,166,0.1); }
+    .cart-qty-num { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
+    .cart-remove-btn { margin-left: auto; background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 20px; padding: 2px 4px; border-radius: 4px; transition: color 0.15s, background 0.15s; line-height: 1; }
+    .cart-remove-btn:hover { color: #dc2626; background: #fef2f2; }
+    .cart-footer { padding: 20px 24px; border-top: 1px solid var(--border); flex-shrink: 0; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+    .cart-total-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .cart-total-amount { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--text); font-weight: 600; }
+    .cart-total-cur { font-size: 12px; color: var(--text-muted); margin-left: 4px; }
+    .cart-checkout-btn { width: 100%; padding: 16px; border-radius: 14px; background: var(--accent); color: #fff; border: none; cursor: pointer; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; transition: background 0.2s, transform 0.15s; }
+    .cart-checkout-btn:hover { background: var(--accent-light); transform: translateY(-1px); }
     .wish-drawer-head {
       display: flex; align-items: center; justify-content: space-between;
       padding: 20px 24px; border-bottom: 1px solid var(--border);
@@ -1765,7 +1810,7 @@
           <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span class="wish-badge" id="wish-badge">0</span>
         </button>
-        <button class="nav-icon-btn" aria-label="Cart" style="position:relative;">
+        <button class="nav-icon-btn" aria-label="Cart" style="position:relative;" onclick="openCartDrawer()">
           <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           <span class="cart-badge" style="display:none;">0</span>
         </button>
@@ -2298,6 +2343,7 @@
       else { cart.push({ id: item.id, name: item.name, price: item.price, img: item.img, icon: item.icon, qty: 1 }); }
       saveCart();
       updateCartBadge();
+      if (document.getElementById('cart-drawer') && document.getElementById('cart-drawer').classList.contains('open')) renderCartList();
       // Brief visual feedback on cart icon
       const cartBtn = document.querySelector('.nav-icon-btn[aria-label="Cart"]');
       if (cartBtn) {
@@ -2412,6 +2458,67 @@
     function wishAddToCart(pid) {
       const item = wishlist.get(pid);
       if (item) addToCart(item);
+    }
+
+    // ===== CART DRAWER =====
+    function renderCartList() {
+      const list    = document.getElementById('cart-list');
+      const footer  = document.getElementById('cart-footer');
+      const label   = document.getElementById('cart-count-label');
+      const totalEl = document.getElementById('cart-total');
+      if (!list) return;
+      const n = cart.reduce((s, i) => s + i.qty, 0);
+      if (label) label.textContent = n ? `(${n})` : '';
+      if (!cart.length) {
+        if (footer) footer.style.display = 'none';
+        list.innerHTML = `<div class="cart-empty">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <p>კალათა ცარიელია</p>
+          <p style="font-size:11px;opacity:.6;">ჩვენი ბეჯითი ხარისხის კორსეტები სცადე!</p>
+        </div>`;
+        return;
+      }
+      if (footer) footer.style.display = '';
+      const total = cart.reduce((s, i) => s + (parseFloat(i.price) * i.qty), 0);
+      if (totalEl) totalEl.textContent = total.toFixed(0);
+      list.innerHTML = cart.map(item => {
+        const imgHtml = item.img ? `<img src="${item.img}" alt="${item.name}" loading="lazy">` : item.icon;
+        return `<div class="cart-item">
+          <div class="cart-item-img">${imgHtml}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">₾${item.price} GEL</div>
+            <div class="cart-item-actions">
+              <button class="cart-qty-btn" onclick="cartQty('${item.id}',-1)">−</button>
+              <span class="cart-qty-num">${item.qty}</span>
+              <button class="cart-qty-btn" onclick="cartQty('${item.id}',1)">+</button>
+              <button class="cart-remove-btn" onclick="cartRemove('${item.id}')" title="წაშლა">×</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    function openCartDrawer() {
+      renderCartList();
+      document.getElementById('cart-drawer').classList.add('open');
+      document.getElementById('cart-backdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCartDrawer() {
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.getElementById('cart-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function cartRemove(id) {
+      cart = cart.filter(i => i.id !== id);
+      saveCart(); updateCartBadge(); renderCartList();
+    }
+    function cartQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      saveCart(); updateCartBadge(); renderCartList();
     }
 
     // Init badge on load
@@ -2531,6 +2638,26 @@
   </script>
 
   <!-- ===== WISHLIST DRAWER ===== -->
+  <div id="cart-backdrop" onclick="closeCartDrawer()"></div>
+  <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Cart">
+    <div class="cart-drawer-head">
+      <div class="cart-drawer-title">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        კალათა
+        <span class="cart-count-label" id="cart-count-label"></span>
+      </div>
+      <button class="cart-close-btn" onclick="closeCartDrawer()">×</button>
+    </div>
+    <div class="cart-list" id="cart-list"></div>
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <div class="cart-total-row">
+        <span class="cart-total-label">სულ</span>
+        <span><span class="cart-total-amount" id="cart-total">0</span><span class="cart-total-cur"> ₾ GEL</span></span>
+      </div>
+      <button class="cart-checkout-btn" onclick="closeCartDrawer()">გადახდის გვერდი →</button>
+    </div>
+  </div>
+
   <div id="wish-backdrop" onclick="closeWishDrawer()"></div>
   <div id="wish-drawer" role="dialog" aria-modal="true" aria-label="Wishlist">
     <div class="wish-drawer-head">
