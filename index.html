@@ -1574,6 +1574,103 @@
       #nav-logo-desktop { display: flex !important; }
       #nav-logo-mobile { display: none !important; }
     }
+  /* ===== QUICK VIEW MODAL ===== */
+  #qv-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(30,20,40,0.55); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    padding: 16px;
+  }
+  #qv-overlay.open { opacity: 1; pointer-events: all; }
+  #qv-modal {
+    background: #fff; border-radius: 24px;
+    width: 100%; max-width: 860px; max-height: 90vh; overflow-y: auto;
+    position: relative; display: grid; grid-template-columns: 1fr 1fr;
+    transform: translateY(20px) scale(0.97); transition: transform 0.25s ease;
+    box-shadow: 0 24px 80px rgba(123,79,166,0.2);
+  }
+  #qv-overlay.open #qv-modal { transform: translateY(0) scale(1); }
+  .qv-close {
+    position: absolute; top: 14px; right: 14px; z-index: 10;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(123,79,166,0.08); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--text-muted); transition: background 0.2s;
+  }
+  .qv-close:hover { background: rgba(123,79,166,0.16); }
+  .qv-gallery {
+    background: #f5f3ef; border-radius: 24px 0 0 24px;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .qv-main-wrap {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    position: relative; min-height: 300px; overflow: hidden;
+  }
+  .qv-main-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: opacity 0.15s; }
+  .qv-main-wrap.switching img { opacity: 0; }
+  .qv-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.92); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: background 0.15s;
+  }
+  .qv-arrow:hover { background: #fff; }
+  #qv-prev { left: 10px; } #qv-next { right: 10px; }
+  .qv-thumbs {
+    display: flex; gap: 6px; padding: 10px 14px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .qv-thumbs::-webkit-scrollbar { display: none; }
+  .qv-thumb {
+    width: 50px; height: 50px; border-radius: 10px; flex-shrink: 0;
+    object-fit: cover; border: 2px solid transparent; cursor: pointer;
+    transition: border-color 0.15s; background: #ece9e3;
+  }
+  .qv-thumb.active { border-color: var(--accent); }
+  .qv-counter { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; padding-bottom: 10px; }
+  .qv-info { padding: 36px 30px; display: flex; flex-direction: column; gap: 14px; }
+  .qv-category { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .qv-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,3vw,30px); font-weight: 500; color: var(--text); line-height: 1.2; }
+  .qv-price-row { display: flex; align-items: baseline; gap: 8px; }
+  .qv-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--accent); font-weight: 600; }
+  .qv-price-old { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
+  .qv-price-cur { font-size: 13px; color: var(--text-muted); }
+  .qv-desc { font-size: 13px; line-height: 1.8; color: #666; max-height: 80px; overflow-y: auto; }
+  .qv-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .qv-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qv-swatch {
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; box-shadow: 0 0 0 1px rgba(0,0,0,0.13);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .qv-swatch:hover { transform: scale(1.15); }
+  .qv-swatch.active { box-shadow: 0 0 0 3px var(--accent); }
+  .qv-sizes { display: flex; flex-wrap: wrap; gap: 6px; border-radius: 10px; transition: outline 0.2s; }
+  .qv-sz {
+    padding: 6px 13px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: transparent; font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+    cursor: pointer; color: var(--text); transition: all 0.15s; font-family: 'Montserrat', sans-serif;
+  }
+  .qv-sz:hover { border-color: var(--accent); color: var(--accent); }
+  .qv-sz.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .qv-sz.oos { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+  .qv-add {
+    margin-top: auto; padding: 15px; border-radius: 14px;
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .qv-add:hover { background: var(--accent-light); transform: translateY(-1px); }
+  @media (max-width: 640px) {
+    #qv-modal { grid-template-columns: 1fr; }
+    .qv-gallery { border-radius: 24px 24px 0 0; }
+    .qv-main-wrap { min-height: 220px; }
+    .qv-info { padding: 20px; }
+  }
   </style>
 </head>
 <body>
@@ -1920,7 +2017,7 @@
             ${sizesHtml}
             <div class="product-footer">
               ${priceHtml}
-              <a href="#" class="product-btn">დეტალები</a>
+              <button class="product-btn" onclick="openQuickView('${pid}')">დეტალები</button>
             </div>
           </div>
         </div>`;
@@ -2487,6 +2584,178 @@
   </div>
 
   <!-- ===== LIGHTBOX ===== -->
+  <!-- QUICK VIEW MODAL -->
+  <div id="qv-overlay" role="dialog" aria-modal="true" aria-label="Quick View">
+    <div id="qv-modal">
+      <button class="qv-close" id="qv-close" aria-label="დახურვა">&#215;</button>
+      <div class="qv-gallery">
+        <div class="qv-main-wrap" id="qv-main-wrap">
+          <img id="qv-main-img" src="" alt="" />
+          <button class="qv-arrow" id="qv-prev">&#8249;</button>
+          <button class="qv-arrow" id="qv-next">&#8250;</button>
+        </div>
+        <div class="qv-thumbs" id="qv-thumbs"></div>
+        <div class="qv-counter" id="qv-counter"></div>
+      </div>
+      <div class="qv-info">
+        <div class="qv-category" id="qv-cat"></div>
+        <div class="qv-name" id="qv-name"></div>
+        <div class="qv-price-row" id="qv-price-row"></div>
+        <p class="qv-desc" id="qv-desc"></p>
+        <div id="qv-colors-wrap">
+          <div class="qv-label">ფერი</div>
+          <div class="qv-swatches" id="qv-swatches"></div>
+        </div>
+        <div id="qv-sizes-wrap">
+          <div class="qv-label">ზომა</div>
+          <div class="qv-sizes" id="qv-sizes"></div>
+        </div>
+        <button class="qv-add" id="qv-add">+ კალათაში დამატება</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById('qv-overlay');
+      let qvImgs = [], qvIdx = 0, qvProd = null, qvSize = null;
+
+      function allImgsQv(p) {
+        const seen = new Set(), res = [];
+        for (const u of (p.images || [])) { if (u && !seen.has(u)) { seen.add(u); res.push(u); } }
+        for (const c of (p.colors || [])) {
+          for (const u of (c.images || [])) { if (u && !seen.has(u)) { seen.add(u); res.push(u); } }
+        }
+        return res;
+      }
+
+      function renderQvGallery() {
+        const wrap = document.getElementById('qv-main-wrap');
+        const img  = document.getElementById('qv-main-img');
+        const thumbsEl = document.getElementById('qv-thumbs');
+        const counterEl = document.getElementById('qv-counter');
+        const hasMult = qvImgs.length > 1;
+
+        if (qvImgs.length) {
+          wrap.classList.add('switching');
+          setTimeout(() => { img.src = qvImgs[qvIdx]; wrap.classList.remove('switching'); }, 110);
+          img.style.display = '';
+        } else {
+          img.style.display = 'none';
+        }
+        document.getElementById('qv-prev').style.display = hasMult ? '' : 'none';
+        document.getElementById('qv-next').style.display = hasMult ? '' : 'none';
+        counterEl.textContent = hasMult ? (qvIdx + 1) + ' / ' + qvImgs.length : '';
+
+        thumbsEl.innerHTML = qvImgs.map((src, i) =>
+          `<img class="qv-thumb${i===qvIdx?' active':''}" src="${src}" data-i="${i}" alt="">`
+        ).join('');
+        thumbsEl.querySelectorAll('.qv-thumb').forEach(th => {
+          th.addEventListener('click', () => { qvIdx = +th.dataset.i; renderQvGallery(); });
+        });
+      }
+
+      function goQv(dir) {
+        if (!qvImgs.length) return;
+        qvIdx = (qvIdx + dir + qvImgs.length) % qvImgs.length;
+        renderQvGallery();
+      }
+
+      window.openQuickView = function (pid) {
+        const p = allProducts.find(x => String(x.id) === String(pid));
+        if (!p) return;
+        qvProd = p; qvIdx = 0; qvSize = null;
+        qvImgs = allImgsQv(p);
+
+        document.getElementById('qv-cat').textContent  = p.category || '';
+        document.getElementById('qv-name').textContent = p.name || '';
+        document.getElementById('qv-desc').textContent = p.description || '';
+
+        const priceRow = document.getElementById('qv-price-row');
+        if (p.isSale && p.salePrice) {
+          priceRow.innerHTML = `<span class="qv-price-old">₾${p.price}</span><span class="qv-price">₾${p.salePrice}</span><span class="qv-price-cur">GEL</span>`;
+        } else {
+          priceRow.innerHTML = `<span class="qv-price">₾${p.price}</span><span class="qv-price-cur">GEL</span>`;
+        }
+
+        const colors = (p.colors || []).filter(c => c.enabled !== false);
+        const swatchesEl = document.getElementById('qv-swatches');
+        const colorsWrap = document.getElementById('qv-colors-wrap');
+        if (colors.length) {
+          swatchesEl.innerHTML = colors.map((c, i) =>
+            `<div class="qv-swatch${i===0?' active':''}" style="background:${c.hex};" title="${c.name}" data-i="${i}"></div>`
+          ).join('');
+          swatchesEl.querySelectorAll('.qv-swatch').forEach(sw => {
+            sw.addEventListener('click', () => {
+              swatchesEl.querySelectorAll('.qv-swatch').forEach(s => s.classList.remove('active'));
+              sw.classList.add('active');
+            });
+          });
+          colorsWrap.style.display = '';
+        } else { colorsWrap.style.display = 'none'; }
+
+        const sizes  = Array.isArray(p.sizes) ? p.sizes : [];
+        const oosSet = new Set(Array.isArray(p.outOfStock) ? p.outOfStock : []);
+        const sizesEl   = document.getElementById('qv-sizes');
+        const sizesWrap = document.getElementById('qv-sizes-wrap');
+        if (sizes.length) {
+          sizesEl.innerHTML = sizes.map(s => {
+            const oos = oosSet.has(s);
+            return `<button class="qv-sz${oos?' oos':''}" ${oos?'disabled':''} data-size="${s}">${s}</button>`;
+          }).join('');
+          sizesEl.querySelectorAll('.qv-sz:not(.oos)').forEach(btn => {
+            btn.addEventListener('click', () => {
+              sizesEl.querySelectorAll('.qv-sz').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              qvSize = btn.dataset.size;
+            });
+          });
+          sizesWrap.style.display = '';
+        } else { sizesWrap.style.display = 'none'; }
+
+        renderQvGallery();
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      function closeQv() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('qv-close').addEventListener('click', closeQv);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeQv(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeQv(); });
+      document.getElementById('qv-prev').addEventListener('click', () => goQv(-1));
+      document.getElementById('qv-next').addEventListener('click', () => goQv(1));
+
+      let touchX = 0;
+      document.getElementById('qv-main-wrap').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+      document.getElementById('qv-main-wrap').addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) goQv(dx < 0 ? 1 : -1);
+      }, { passive: true });
+
+      document.getElementById('qv-add').addEventListener('click', () => {
+        if (!qvProd) return;
+        const avail = (qvProd.sizes || []).filter(s => !(qvProd.outOfStock || []).includes(s));
+        if (avail.length && !qvSize) {
+          const el = document.getElementById('qv-sizes');
+          el.style.outline = '2px solid var(--accent)'; el.style.padding = '6px';
+          setTimeout(() => { el.style.outline = ''; el.style.padding = ''; }, 900);
+          return;
+        }
+        const price = (qvProd.isSale && qvProd.salePrice) ? qvProd.salePrice : qvProd.price;
+        addToCart({
+          id:    String(qvProd.id) + (qvSize ? '_' + qvSize : ''),
+          name:  qvProd.name + (qvSize ? ` (${qvSize})` : ''),
+          price, img: qvImgs[0] || '', icon: qvProd.icon || '✨',
+        });
+        closeQv();
+      });
+    })();
+  </script>
+
   <div id="lb-overlay" role="dialog" aria-modal="true" aria-label="Image gallery">
     <div id="lb-img-wrap">
       <img id="lb-img" src="" alt="Product image" />
