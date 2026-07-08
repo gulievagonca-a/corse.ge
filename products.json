@@ -21,16 +21,18 @@
         "3XL"
       ],
       "outOfStock": [],
-      "images": [],
+      "images": [
+        "/uploads/1783536733184_1046033573_1__1_.jpeg"
+      ],
       "colors": [
         {
           "name": "შავი",
           "hex": "#1C1C1C",
           "images": [
-            "/uploads/1777492808347_WhatsApp Image 2026-04-29 at 23.57.49.jpeg",
-            "/uploads/1777492832134_WhatsApp Image 2026-04-29 at 23.59.13.jpeg",
-            "/uploads/1777492841388_WhatsApp Image 2026-04-29 at 23.59.15.jpeg",
-            "/uploads/1777492847900_WhatsApp Image 2026-04-29 at 23.59.19.jpeg"
+            "/uploads/1783536741333_1046033573_0.jpeg",
+            "/uploads/1783536749490_1046033573_5.jpeg",
+            "/uploads/1783536761038_1046033573_2.jpeg",
+            "/uploads/1783536770423_1046033573_4.jpeg"
           ]
         },
         {
