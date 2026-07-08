@@ -1898,7 +1898,7 @@
   </section>
 
   <!-- ===== TESTIMONIALS ===== -->
-  <section class="testimonials" id="testimonials">
+  <section class="testimonials" id="testimonials" style="display:none">
     <div class="section-inner">
       <div class="testimonials-header fade-in">
         <span class="section-eyebrow">მომხმარებელთა გამოხმაურებები</span>
@@ -2261,8 +2261,9 @@
       }
 
       // TESTIMONIALS
-      if (c.testimonials) {
+      if (c.testimonials && c.testimonials.length > 0) {
         const grid = document.getElementById('testimonials-grid');
+        const section = document.getElementById('testimonials');
         if (grid) grid.innerHTML = c.testimonials.map(t => {
           const stars = '★'.repeat(t.rating || 5) + '☆'.repeat(5 - (t.rating || 5));
           const avatar = t.author ? t.author.charAt(0) : '?';
@@ -2279,6 +2280,7 @@
             </div>
           </div>`;
         }).join('');
+        if (section) section.style.display = '';
       }
 
       // FOOTER
