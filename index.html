@@ -2264,22 +2264,25 @@
       if (c.testimonials && c.testimonials.length > 0) {
         const grid = document.getElementById('testimonials-grid');
         const section = document.getElementById('testimonials');
-        if (grid) grid.innerHTML = c.testimonials.map(t => {
-          const stars = '★'.repeat(t.rating || 5) + '☆'.repeat(5 - (t.rating || 5));
-          const avatar = t.author ? t.author.charAt(0) : '?';
-          return `<div class="testimonial-card fade-in">
-            <div class="testimonial-quote">"</div>
-            <p class="testimonial-text">${t.text}</p>
-            <div class="testimonial-author">
-              <div class="author-avatar">${avatar}</div>
-              <div>
-                <div class="author-name">${t.author}</div>
-                <div class="author-loc">${t.location || ''}</div>
-                <div class="stars">${stars}</div>
+        if (grid) {
+          grid.innerHTML = c.testimonials.map(t => {
+            const stars = '★'.repeat(t.rating || 5) + '☆'.repeat(5 - (t.rating || 5));
+            const avatar = t.author ? t.author.charAt(0) : '?';
+            return `<div class="testimonial-card fade-in">
+              <div class="testimonial-quote">"</div>
+              <p class="testimonial-text">${t.text}</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">${avatar}</div>
+                <div>
+                  <div class="author-name">${t.author}</div>
+                  <div class="author-loc">${t.location || ''}</div>
+                  <div class="stars">${stars}</div>
+                </div>
               </div>
-            </div>
-          </div>`;
-        }).join('');
+            </div>`;
+          }).join('');
+          grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        }
         if (section) section.style.display = '';
       }
 
