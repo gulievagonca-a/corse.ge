@@ -4,8 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function _d(s){return s.replace(/[a-zA-Z]/g,c=>{const b=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-b+13)%26+b);})}
-const GITHUB_TOKEN = _d('tuc_WVFvinoqkzuh5D6iotnItVErhddG9G0BxgHo');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_OWNER = 'gulievagonca-a';
 const GITHUB_REPO  = 'corse.ge';
 const FILE_PATH    = 'products.json';
@@ -60,6 +59,10 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
+    if (!GITHUB_TOKEN) {
+      res.status(500).json({ error: 'GITHUB_TOKEN is not configured' });
+      return;
+    }
     try {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
       const sha = await getFileSha();

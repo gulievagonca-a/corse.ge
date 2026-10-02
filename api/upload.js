@@ -1,5 +1,4 @@
-function _d(s){return s.replace(/[a-zA-Z]/g,c=>{const b=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-b+13)%26+b);})}
-const GITHUB_TOKEN = _d('tuc_WVFvinoqkzuh5D6iotnItVErhddG9G0BxgHo');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_OWNER = 'gulievagonca-a';
 const GITHUB_REPO  = 'corse.ge';
 
@@ -9,6 +8,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
+  if (!GITHUB_TOKEN) { res.status(500).json({ error: 'GITHUB_TOKEN is not configured' }); return; }
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
