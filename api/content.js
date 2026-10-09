@@ -9,13 +9,16 @@ const GITHUB_OWNER = 'gulievagonca-a';
 const GITHUB_REPO  = 'corse.ge';
 const FILE_PATH    = 'content.json';
 
-async function getFileSha() {
+async function getFile() {
   const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
-    headers: { Authorization: `token ${GITHUB_TOKEN}`, 'User-Agent': 'corse-admin' }
+    headers: {
+      ...(GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {}),
+      'User-Agent': 'corse-admin',
+    },
   });
-  if (!res.ok) throw new Error(`GitHub SHA fetch failed: ${res.status}`);
+  if (!res.ok) throw new Error(`GitHub fetch failed: ${res.status}`);
   const data = await res.json();
-  return data.sha;
+  return { sha: data.sha, content: Buffer.from(data.content, 'base64').toString('utf8') };
 }
 
 async function commitFile(content, sha) {
@@ -47,13 +50,20 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
 
   if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store');
     try {
-      const filePath = path.join(__dirname, '..', 'content.json');
-      const data = fs.readFileSync(filePath, 'utf8');
+      const { content } = await getFile();
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).send(data);
+      res.status(200).send(content);
     } catch {
-      res.status(500).json({ error: 'Could not read content' });
+      try {
+        const filePath = path.join(__dirname, '..', 'content.json');
+        const data = fs.readFileSync(filePath, 'utf8');
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+      } catch {
+        res.status(500).json({ error: 'Could not read content' });
+      }
     }
     return;
   }
@@ -65,7 +75,7 @@ export default async function handler(req, res) {
     }
     try {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      const sha = await getFileSha();
+      const { sha } = await getFile();
       await commitFile(body, sha);
       res.status(200).json({ ok: true });
     } catch (e) {
