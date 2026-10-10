@@ -1241,37 +1241,6 @@
       ]
     },
     {
-      "id": "prod_1781117278947",
-      "name": "სლიკონის ბიუსტჰალტერი შესაკრავით",
-      "category": "ბიუსტჰალტერი",
-      "description": "რეგულირებადი 'push-up' ეფექტი",
-      "price": "18",
-      "icon": "✨",
-      "featured": false,
-      "collection": "ქალის",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1781117262904_46428958_1.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "კრემი",
-          "hex": "#EDE0CC",
-          "images": [
-            "/uploads/1781117271334_46428958_3.jpeg"
-          ]
-        }
-      ]
-    },
-    {
       "id": "prod_1781695457967",
       "name": "უბრელეტო-ტოტიანი ბოდე",
       "category": "ბოდე",
@@ -1369,6 +1338,37 @@
             "/uploads/1781896978141_WhatsApp_Image_2026-06-19_at_23.08.30-2.jpeg",
             "/uploads/1781896986176_WhatsApp_Image_2026-06-19_at_23.08.30-4.jpeg",
             "/uploads/1781896996090_WhatsApp_Image_2026-06-19_at_23.08.30-5.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781117278947",
+      "name": "სლიკონის ბიუსტჰალტერი შესაკრავით",
+      "category": "ბიუსტჰალტერი",
+      "description": "რეგულირებადი 'push-up' ეფექტი",
+      "price": "18",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781117262904_46428958_1.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1781117271334_46428958_3.jpeg"
           ]
         }
       ]
