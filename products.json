@@ -990,6 +990,615 @@
           ]
         }
       ]
+    },
+    {
+      "id": "prod_1780135195847",
+      "name": "bode",
+      "category": "bode",
+      "description": "bode",
+      "price": "45",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780135131622_WhatsApp_Image_2026-05-26_at_18.58.11-2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780135147625_WhatsApp_Image_2026-05-26_at_18.58.11-3.jpeg",
+            "/uploads/1780135153773_WhatsApp_Image_2026-05-26_at_18.58.11-4.jpeg",
+            "/uploads/1780135161255_WhatsApp_Image_2026-05-26_at_18.58.11-5.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1780135361043",
+      "name": "მაქმანიანი ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780135307200_WhatsApp_Image_2026-05-26_at_18.58.11-8.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780135329914_WhatsApp_Image_2026-05-26_at_18.58.11.jpeg",
+            "/uploads/1780135346754_WhatsApp_Image_2026-05-26_at_18.58.11-6.jpeg",
+            "/uploads/1780135356915_WhatsApp_Image_2026-05-26_at_18.58.11-7.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1780485786541",
+      "name": "bode",
+      "category": "bode",
+      "description": "Sculpt Seamless Strong Compression Zip Front Brief Bodysuit - Black",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780485810846_WhatsApp_Image_2026-06-03_at_15.18.08-5.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780485918199_WhatsApp_Image_2026-06-03_at_15.18.08.jpeg",
+            "/uploads/1780485925666_WhatsApp_Image_2026-06-03_at_15.18.08-4.jpeg",
+            "/uploads/1780485932960_WhatsApp_Image_2026-06-03_at_15.18.08-2.jpeg",
+            "/uploads/1780485941618_WhatsApp_Image_2026-06-03_at_15.18.09-2.jpeg"
+          ]
+        },
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "prod_1780488122954",
+      "name": "ტრუსი-კორსეტი",
+      "category": "საცვალი",
+      "description": "მაღალწელიანი, მუცლისა და წელის კორექციის კორსეტიანი ტრუსი",
+      "price": "18",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780488096466_248720437_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780488108916_248720437_1.jpeg",
+            "/uploads/1780488113284_248720437_2.jpeg",
+            "/uploads/1780488117684_248720437_3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1780488326850",
+      "name": "ტრუსი კორსეტი",
+      "category": "ტრუსი",
+      "description": "მაღალწელიანი ტრუსი კორსეტი",
+      "price": "24",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": true,
+      "salePrice": "18",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL",
+        "5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780488272063_865473300_0.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1780488277078_865473300_1.jpeg",
+            "/uploads/1780488280532_865473300_2.jpeg",
+            "/uploads/1780488284397_865473300_3.jpeg",
+            "/uploads/1780488287795_865473300_4.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1780745493785",
+      "name": "ბანდაჟი",
+      "category": "ბანდაჟი",
+      "description": "კავიანი' ტოტებიანი მაკორექტირებელი კორსეტი",
+      "price": "35",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780745468096_1124121300_1.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780745475990_1124121300_2.jpeg",
+            "/uploads/1780745482694_1124121300_4.jpeg",
+            "/uploads/1780745487595_1124121300_5.jpeg",
+            "/uploads/1780745491673_1124121300_0.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1780745884365",
+      "name": "ბანდაჟი",
+      "category": "ბანდაჟი",
+      "description": "კავიანი,უტოტო მაკორექტირებელი ბანდაჟი",
+      "price": "28",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1780745853155_WhatsApp_Image_2026-06-06_at_15.35.08-2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1780745863137_WhatsApp_Image_2026-06-06_at_15.35.08.jpeg",
+            "/uploads/1780745868469_WhatsApp_Image_2026-06-06_at_15.35.08-4.jpeg",
+            "/uploads/1780745873317_WhatsApp_Image_2026-06-06_at_15.35.08-5.jpeg",
+            "/uploads/1780745878803_WhatsApp_Image_2026-06-06_at_15.35.08-3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781116881047",
+      "name": "სლიკონის ბიუსტჰალტერი",
+      "category": "ბიუსტჰალტერი",
+      "description": "მკერდის ამწევი სლიკონი",
+      "price": "16",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781116737359_763654566_2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1781116761060_763654566_0.jpeg",
+            "/uploads/1781116779190_763654566_1.jpeg",
+            "/uploads/1781116786080_763654566_3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781117012444",
+      "name": "სლიკონის ბიუსტჰალტერი",
+      "category": "ბიუსტჰალტერი",
+      "description": "მკერდის ამწევი სლიკონი",
+      "price": "14",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781116976521_865004344_2.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781116989571_865004344_1.jpeg",
+            "/uploads/1781117000475_865004344_0.jpeg",
+            "/uploads/1781117007431_865004344_3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781117278947",
+      "name": "სლიკონის ბიუსტჰალტერი შესაკრავით",
+      "category": "ბიუსტჰალტერი",
+      "description": "რეგულირებადი 'push-up' ეფექტი",
+      "price": "18",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781117262904_46428958_1.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": [
+            "/uploads/1781117271334_46428958_3.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781695457967",
+      "name": "უბრელეტო-ტოტიანი ბოდე",
+      "category": "ბოდე",
+      "description": "Strapless ტოტიანი ბოდე",
+      "price": "58",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XXS/XS",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781695441599_WhatsApp_Image_2026-06-17_at_14.41.23.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781695446493_WhatsApp_Image_2026-06-17_at_14.41.04-2.jpeg",
+            "/uploads/1781695450978_WhatsApp_Image_2026-06-17_at_14.41.04.jpeg",
+            "/uploads/1781695455123_WhatsApp_Image_2026-06-17_at_14.41.20.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781695645989",
+      "name": "უბრეტელო უტოტო ბოდე",
+      "category": "ბოდე",
+      "description": "strapless",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XXS/XS",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781695618934_WhatsApp_Image_2026-06-17_at_14.41.14.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781695631401_WhatsApp_Image_2026-06-17_at_14.41.14-2.jpeg",
+            "/uploads/1781695639368_WhatsApp_Image_2026-06-17_at_14.41.14-3.jpeg",
+            "/uploads/1781695643485_WhatsApp_Image_2026-06-17_at_14.41.14-4.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781896999549",
+      "name": "ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "64",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781896965542_WhatsApp_Image_2026-06-19_at_23.08.30-3.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781896978141_WhatsApp_Image_2026-06-19_at_23.08.30-2.jpeg",
+            "/uploads/1781896986176_WhatsApp_Image_2026-06-19_at_23.08.30-4.jpeg",
+            "/uploads/1781896996090_WhatsApp_Image_2026-06-19_at_23.08.30-5.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1781897208252",
+      "name": "ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XXS/XS",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1781897162750_WhatsApp_Image_2026-06-19_at_23.16.09-3.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1781897185545_WhatsApp_Image_2026-06-19_at_23.16.09-2.jpeg",
+            "/uploads/1781897194295_WhatsApp_Image_2026-06-19_at_23.16.09.jpeg",
+            "/uploads/1781897199594_WhatsApp_Image_2026-06-19_at_23.16.09-4.jpeg"
+          ]
+        },
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "prod_1782242787317",
+      "name": "ბოდე",
+      "category": "ბოდე",
+      "description": "უნაკერო ლაზერული ბოდე",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1782242761785_WhatsApp_Image_2026-06-23_at_23.23.10.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": [
+            "/uploads/1782242770258_WhatsApp_Image_2026-06-23_at_23.23.10-2.jpeg",
+            "/uploads/1782242775967_WhatsApp_Image_2026-06-23_at_23.23.10-3.jpeg",
+            "/uploads/1782242781191_WhatsApp_Image_2026-06-23_at_23.23.11.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1782663509151",
+      "name": "მსხვილი ბრეტელიანი ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "XXS/XS",
+        "S/M",
+        "L/XL",
+        "2XL/3XL",
+        "4XL/5XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1782663446166_WhatsApp_Image_2026-06-28_at_20.12.45-3.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": [
+            "/uploads/1782663458965_WhatsApp_Image_2026-06-28_at_20.12.45-5.jpeg",
+            "/uploads/1782663466474_WhatsApp_Image_2026-06-28_at_20.12.46.jpeg",
+            "/uploads/1782663498027_WhatsApp_Image_2026-06-28_at_20.12.46-2.jpeg",
+            "/uploads/1782663505754_WhatsApp_Image_2026-06-28_at_20.12.45-4.jpeg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prod_1783109839548",
+      "name": "ბოდე შესაკრავით",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "55",
+      "icon": "✨",
+      "featured": false,
+      "collection": "ქალის",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1783109797273_WhatsApp_Image_2026-07-04_at_00.09.55-4.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": []
+        },
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": [
+            "/uploads/1783109808048_WhatsApp_Image_2026-07-04_at_00.09.55-3.jpeg",
+            "/uploads/1783109816721_WhatsApp_Image_2026-07-04_at_00.09.55-6.jpeg",
+            "/uploads/1783109823249_WhatsApp_Image_2026-07-04_at_00.09.55.jpeg",
+            "/uploads/1783109834192_WhatsApp_Image_2026-07-04_at_00.09.55-3.jpeg"
+          ]
+        }
+      ]
     }
   ]
 }
