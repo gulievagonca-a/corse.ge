@@ -1495,6 +1495,40 @@
       ]
     },
     {
+      "id": "prod_1791657985598",
+      "name": "უნაკერო ბოდე",
+      "category": "ბოდე",
+      "description": "ბოდე",
+      "price": "54",
+      "icon": "✨",
+      "featured": false,
+      "collection": "",
+      "isSale": false,
+      "salePrice": "",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "outOfStock": [],
+      "images": [
+        "/uploads/1791657930343_WhatsApp_Image_2026-10-10_at_22.44.00-4.jpeg"
+      ],
+      "colors": [
+        {
+          "name": "შავი",
+          "hex": "#1C1C1C",
+          "images": [
+            "/uploads/1791657938992_WhatsApp_Image_2026-10-10_at_22.44.01.jpeg",
+            "/uploads/1791657952854_WhatsApp_Image_2026-10-10_at_22.44.00.jpeg",
+            "/uploads/1791657963574_WhatsApp_Image_2026-10-10_at_22.44.01-2.jpeg",
+            "/uploads/1791657980444_WhatsApp_Image_2026-10-10_at_22.37.49-2.jpeg"
+          ]
+        }
+      ]
+    },
+    {
       "id": "prod_1781117278947",
       "name": "სლიკონის ბიუსტჰალტერი შესაკრავით",
       "category": "ბიუსტჰალტერი",
@@ -1596,40 +1630,6 @@
             "/uploads/1781116761060_763654566_0.jpeg",
             "/uploads/1781116779190_763654566_1.jpeg",
             "/uploads/1781116786080_763654566_3.jpeg"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "prod_1791657985598",
-      "name": "უნაკერო ბოდე",
-      "category": "ბოდე",
-      "description": "ბოდე",
-      "price": "54",
-      "icon": "✨",
-      "featured": false,
-      "collection": "",
-      "isSale": false,
-      "salePrice": "",
-      "sizes": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "outOfStock": [],
-      "images": [
-        "/uploads/1791657930343_WhatsApp_Image_2026-10-10_at_22.44.00-4.jpeg"
-      ],
-      "colors": [
-        {
-          "name": "შავი",
-          "hex": "#1C1C1C",
-          "images": [
-            "/uploads/1791657938992_WhatsApp_Image_2026-10-10_at_22.44.01.jpeg",
-            "/uploads/1791657952854_WhatsApp_Image_2026-10-10_at_22.44.00.jpeg",
-            "/uploads/1791657963574_WhatsApp_Image_2026-10-10_at_22.44.01-2.jpeg",
-            "/uploads/1791657980444_WhatsApp_Image_2026-10-10_at_22.37.49-2.jpeg"
           ]
         }
       ]
