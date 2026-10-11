@@ -20,6 +20,7 @@
         "2XL",
         "3XL"
       ],
+      "outOfStock": [],
       "images": [],
       "colors": [
         {
@@ -31,6 +32,26 @@
             "/uploads/1777492841388_WhatsApp Image 2026-04-29 at 23.59.15.jpeg",
             "/uploads/1777492847900_WhatsApp Image 2026-04-29 at 23.59.19.jpeg"
           ]
+        },
+        {
+          "name": "კრემი",
+          "hex": "#EDE0CC",
+          "images": []
+        },
+        {
+          "name": "თეთრი",
+          "hex": "#FFFFFF",
+          "images": []
+        },
+        {
+          "name": "წითელი",
+          "hex": "#C0392B",
+          "images": []
+        },
+        {
+          "name": "ყავისფერი",
+          "hex": "#6B3A2A",
+          "images": []
         }
       ]
     },
