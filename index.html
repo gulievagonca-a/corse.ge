@@ -736,11 +736,12 @@
     }
     .product-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 26px;
+      font-weight: 600;
       color: var(--text);
       margin-bottom: 10px;
-      line-height: 1.2;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
     }
     .product-desc {
       font-size: 12px;
@@ -786,16 +787,21 @@
       justify-content: space-between;
     }
     .product-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
       color: var(--accent);
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
     }
     .product-price span {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text-muted);
       font-family: 'Montserrat', sans-serif;
-      font-weight: 400;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 1px;
     }
     .product-btn {
       position: relative;
@@ -1699,11 +1705,11 @@
   .qv-counter { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; padding-bottom: 10px; }
   .qv-info { padding: 36px 30px; display: flex; flex-direction: column; gap: 14px; }
   .qv-category { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
-  .qv-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,3vw,30px); font-weight: 500; color: var(--text); line-height: 1.2; }
+  .qv-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(23px,3vw,32px); font-weight: 600; letter-spacing: -0.01em; color: var(--text); line-height: 1.22; }
   .qv-price-row { display: flex; align-items: baseline; gap: 8px; }
-  .qv-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--accent); font-weight: 600; }
+  .qv-price { font-family: 'Montserrat', sans-serif; font-size: 30px; color: var(--accent); font-weight: 800; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
   .qv-price-old { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
-  .qv-price-cur { font-size: 13px; color: var(--text-muted); }
+  .qv-price-cur { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
   .qv-desc { font-size: 13px; line-height: 1.8; color: #666; max-height: 80px; overflow-y: auto; }
   .qv-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
   .qv-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
