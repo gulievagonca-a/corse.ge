@@ -1517,6 +1517,20 @@
       display: none;
       align-items: center; gap: 2px;
     }
+    .site-toast {
+      position: fixed; left: 50%; bottom: 28px; z-index: 10000;
+      transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+      background: var(--text); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+      padding: 13px 22px; border-radius: 100px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+      display: flex; align-items: center; gap: 8px;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space: nowrap;
+    }
+    .site-toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .site-toast.error { background: #dc2626; }
+    .site-toast.success { background: var(--accent); }
     .nav-icon-btn {
       width: 36px; height: 36px; border: none; background: none;
       display: flex; align-items: center; justify-content: center;
@@ -2346,6 +2360,17 @@
       }
     });
 
+    // ===== TOAST =====
+    let siteToastTimer;
+    function showSiteToast(msg, type = '') {
+      const t = document.getElementById('site-toast');
+      if (!t) return;
+      clearTimeout(siteToastTimer);
+      t.textContent = msg;
+      t.className = 'site-toast show' + (type ? ' ' + type : '');
+      siteToastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
     // ===== CART =====
     const CART_KEY = 'corse_cart';
     let cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
@@ -2371,6 +2396,7 @@
         cartBtn.style.color = 'var(--accent)';
         setTimeout(() => cartBtn.style.color = '', 600);
       }
+      showSiteToast('✓ დაემატა კალათაში', 'success');
     }
 
     updateCartBadge();
@@ -2660,6 +2686,8 @@
 
   <!-- ===== WISHLIST DRAWER ===== -->
   <div id="cart-backdrop" onclick="closeCartDrawer()"></div>
+  <div class="site-toast" id="site-toast"></div>
+
   <div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Cart">
     <div class="cart-drawer-head">
       <div class="cart-drawer-title">
@@ -2891,6 +2919,7 @@
           const el = document.getElementById('qv-sizes');
           el.style.outline = '2px solid var(--accent)'; el.style.padding = '6px';
           setTimeout(() => { el.style.outline = ''; el.style.padding = ''; }, 900);
+          showSiteToast('გთხოვთ აირჩიოთ ზომა', 'error');
           return;
         }
         const price = (qvProd.isSale && qvProd.salePrice) ? qvProd.salePrice : qvProd.price;
